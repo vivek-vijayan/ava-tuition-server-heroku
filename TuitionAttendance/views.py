@@ -10,23 +10,7 @@ from django.contrib.auth.decorators import login_required
 # A2Portal   -------------------------------------------
 
 def A2P_login(request):
-    return render(request, "A2P-login.html", {})
-
-def A2P_logginer(request):
-    username = request.POST['username']
-    password = request.POST['password']
-    user = authenticate(username=username, password=password)
-    if user:
-        # checking access to A2Portal
-        access = A2Presence_access.objects.filter(
-            leader=user, valid_till__gte=datetime.datetime.now())
-        if len(access) > 0:
-            login(request, user)
-            return redirect(A2P_homepage)
-        else:
-            return render(request, "A2P-login.html", {'error': 'A2Portal access expired, contact admin', 'iserror': True})
-    else:
-        return render(request, "A2P-login.html", {'error': 'Invalid credentials', 'iserror': True})
+    return redirect('/')
 
 @login_required(login_url=A2P_login)
 def A2P_homepage(request):
@@ -42,6 +26,19 @@ def A2P_homepage(request):
         return render(request, "A2P-portal.html", {'total_students': total_students, 'leader': request.user, 'expire_on': expire_on})
     else:
         return redirect(A2P_logout)
+
+@login_required(login_url=A2P_login)
+def A2P_display_action(request, username, action):
+    access = A2Presence_access.objects.filter(
+        leader=request.user, valid_till__gte=datetime.datetime.now())
+    if len(access) > 0:
+        return render(request, "A2P-message-display.html", {
+            'username' : username,
+            'message' : action
+        })
+    else:
+        return redirect(A2P_logout)
+
 
 @login_required(login_url=A2P_login)
 def A2P_query(request):
@@ -133,20 +130,9 @@ def A2P_checkout(request):
 
 
 
-@login_required(login_url=A2P_login)
-def A2P_display_action(request, username, action):
-    access = A2Presence_access.objects.filter(
-        leader=request.user, valid_till__gte=datetime.datetime.now())
-    if len(access) > 0:
-        return render(request, "A2P-message-display.html", {
-            'username' : username,
-            'message' : action
-        })
-    else:
-        return redirect(A2P_logout)
 
 
 def A2P_logout(request):
     logout(request)
-    return redirect(A2P_login)
+    return redirect('/')
 

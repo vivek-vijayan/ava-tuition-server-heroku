@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['192.168.1.100','127.0.0.1', 'ava-tuition-server.herokuapp.com'
 INSTALLED_APPS = [
     'TuitionAttendance',
     'TuitionDB',
+    'TuitionHome',
     'TuitionComplaintBox',
     'django.contrib.admin',
     'django.contrib.auth',

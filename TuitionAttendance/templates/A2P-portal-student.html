@@ -77,7 +77,7 @@
     </nav>
 
 
-    
+
 
     <div class="container" style="margin-top: 20px;">
         <div class="row">
@@ -90,21 +90,24 @@
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="flush-headingOne">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                data-bs-target="#flush-collapseOne" aria-expanded="false"
+                                aria-controls="flush-collapseOne">
                                 Change Filter
                             </button>
                         </h2>
-                        <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
-                            data-parent="#accordionFlushExample">
+                        <div id="flush-collapseOne" class="accordion-collapse collapse"
+                            aria-labelledby="flush-headingOne" data-parent="#accordionFlushExample">
                             <div class="accordion-body">
                                 <div class="col-sm-12">
                                     <div class="col-sm-12" style="padding-top: 20px;">
                                         <form action="query" method="post">
                                             {% csrf_token %}
                                             <div class="input-group mb-3">
-                                                <label class="input-group-text" for="student_name_selection">Student</label>
-                                                <select class="form-select" id="student_name_selection" name="student_name_selection">
-                
+                                                <label class="input-group-text"
+                                                    for="student_name_selection">Student</label>
+                                                <select class="form-select" id="student_name_selection"
+                                                    name="student_name_selection">
+
                                                     {% for x in total_students %}
                                                     {% if x.0 == studentname %}
                                                     <option value="{{ x.1 }}" selected>{{ x.0 }}</option>
@@ -127,7 +130,7 @@
                     </div>
                 </div>
             </div>
-            
+
         </div>
     </div>
     <!-- Students -->
@@ -138,11 +141,12 @@
                     <div class="card-header ">
                         <ion-icon name="person"></ion-icon> Student
                     </div>
-                    
-                    <div class="card-body text-success" style="text-align: center;" >
+
+                    <div class="card-body text-success" style="text-align: center;">
                         <div class="row">
                             <div class="col-sm-3">
-                                <img src="{% static 'students' %}/{{studentname}}.JPG " class="mx-auto d-block" style="border-radius: 100%;" width="200px" alt="user logo">
+                                <img src="{% static 'students' %}/{{studentname}}.jpg" class="mx-auto d-block"
+                                    style="border-radius: 100%;" width="150px" alt="user logo">
                                 <h5 class="card-title text-dark">
                                     <p class="display-6" style="padding-top: 10px;">
                                         {{studentname}}
@@ -152,49 +156,53 @@
                             <div class="col-sm-3">
                                 <div class="col-sm-12">
                                     {% if status == "Not Arrived" %}
-                                    <small class="card-text">Status: <span class="badge rounded-pill bg-danger">{{ status }}</span></small>
+                                    <small class="card-text">Status: <span class="badge rounded-pill bg-danger">{{status }}</span></small>
                                     {% else %}
-                                    <small class="card-text">Status: <span class="badge rounded-pill bg-success">{{ status }}</span></small>
+                                    <small class="card-text">Status: <span class="badge rounded-pill bg-success">{{status }}</span></small>
                                     {% endif %}
                                 </div>
                             </div>
                         </div>
-                        
-                        
+
+
                         <div style="padding-top: 20px;">
                             {% if status != "Not Arrived" %}
-                                <p class="card-text">
-                                <div class="alert alert-success d-flex align-items-center" role="alert">
-                                    <div>
-                                        <small>
-                                            <b> In-time: </b> {{check_in_time}}
-                                
-                                            {% if day_off == True %}
-                                                <br>
-                                                <b> Out-time: </b> {{check_out_time}}
-                                            {% endif %}
-                                        </small>
-                                    </div>
+                            <p class="card-text">
+                            <div class="alert alert-success d-flex align-items-center" role="alert">
+                                <div>
+                                    <small>
+                                        <b> In-time: </b> {{check_in_time}}
+
+                                        {% if day_off == True %}
+                                        <br>
+                                        <b> Out-time: </b> {{check_out_time}}
+                                        {% endif %}
+                                    </small>
                                 </div>
-                                </p>
+                            </div>
+                            </p>
                             {% endif %}
                             {% if day_off != True %}
-                                {% if status == "Not Arrived" %}
-                                <!-- checking in -->
-                                <form action="checkin" method="post">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="student_id" value={{studentid}}>
-                                    <input type="hidden" name="student_name" value={{studentname}}>
-                                    <button type="submit" class="btn btn-success"> <ion-icon name="log-in"></ion-icon>  Check-in Today</button>
-                                </form>
-                                {% else %}
-                                <form action="checkout" method="post">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="student_id" value={{studentid}}>
-                                    <input type="hidden" name="student_name" value={{studentname}}>
-                                    <button type="submit" class="btn btn-danger"> <ion-icon name="log-out"></ion-icon>  Check-out Today</button>
-                                </form>
-                                {% endif %}
+                            {% if status == "Not Arrived" %}
+                            <!-- checking in -->
+                            <form action="checkin" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="student_id" value={{studentid}}>
+                                <input type="hidden" name="student_name" value={{studentname}}>
+                                <button type="submit" class="btn btn-success">
+                                    <ion-icon name="log-in"></ion-icon> Check-in Today
+                                </button>
+                            </form>
+                            {% else %}
+                            <form action="checkout" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="student_id" value={{studentid}}>
+                                <input type="hidden" name="student_name" value={{studentname}}>
+                                <button type="submit" class="btn btn-danger">
+                                    <ion-icon name="log-out"></ion-icon> Check-out Today
+                                </button>
+                            </form>
+                            {% endif %}
                             {% endif %}
                         </div>
                     </div>
@@ -206,9 +214,13 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="card border-success mb-3" style="max-width: 78rem;">
-                    <div class="card-header "><ion-icon name="ticket-outline"></ion-icon>  A2P Token</div>
+                    <div class="card-header ">
+                        <ion-icon name="ticket-outline"></ion-icon> A2P Token
+                    </div>
                     <div class="card-body text-success" style="text-align: center;">
-                        <h5 class="card-title text-dark"><ion-icon name="person-circle-outline" style="font-size:30px"></ion-icon> <br> {{leader}}</h5>
+                        <h5 class="card-title text-dark">
+                            <ion-icon name="person-circle-outline" style="font-size:30px"></ion-icon> <br> {{leader}}
+                        </h5>
                         <div class="text-success">
                             <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:">
                                 <use xlink:href="#info-fill" />
