@@ -131,12 +131,14 @@
                                     <form action="checkin" method="post">
                                         {% csrf_token %}
                                         <input type="hidden" name="student_id" value={{studentid}}>
+                                        <input type="hidden" name="student_name" value={{studentname}}>
                                         <button type="submit" class="btn btn-success">Check-in Today</button>
                                     </form>
                                     {% else %}
                                     <form action="checkout" method="post">
                                         {% csrf_token %}
                                         <input type="hidden" name="student_id" value={{studentid}}>
+                                        <input type="hidden" name="student_name" value={{studentname}}>
                                         <button type="submit" class="btn btn-danger">Check-out Today</button>
                                     </form>
                                     {% endif %}

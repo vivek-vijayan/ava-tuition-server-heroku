@@ -13,18 +13,20 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
 from django.urls import path, include
-from .views import A2P_display, A2P_query, A2P_checkin, A2P_checkout, A2P_login, A2P_logginer, A2P_complain_register, A2P_logout
+from .views import A2P_homepage, A2P_query, A2P_checkin, A2P_checkout, A2P_login, A2P_logginer, A2P_logout, A2P_display_action
 
 urlpatterns = [
-    path('a2portal', A2P_display, name="Attendance Homepage"),
+    path('home', A2P_homepage, name="Attendance Homepage"),
     path('query', A2P_query, name="Attendance query"),
     path('checkin', A2P_checkin, name="checkin query"),
     path('checkout', A2P_checkout, name="checkout query"),
     path('login', A2P_login, name="A2P_login"),
     path('logout', A2P_logout, name="A2P_logout"),
     path('loginer', A2P_logginer, name="A2P_logginer"),
-    path('complain', A2P_complain_register, name="A2P_complain_register")
+    path('show/<username>/<action>', A2P_display_action,
+         name="A2P_display_action")
 
 ]

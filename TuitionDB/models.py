@@ -30,10 +30,22 @@ class Leader(models.Model):
         return str(self.leader_name) + " - " + str(self.leader_roles)
     
     # App access: 
-class A2Portal_access(models.Model):
+class A2Presence_access(models.Model):
     a2p_access_id = models.AutoField(primary_key=True)
     leader = models.ForeignKey(User, on_delete=models.CASCADE)
     a2p_access = models.BooleanField(default=False)
+    valid_from = models.DateTimeField(auto_now=True)
+    valid_till = models.DateTimeField(null=True)
+    description = models.TextField(blank=True)
+
+    def __str__(self):
+        return str(self.leader) + " - valid till : " + str(self.valid_till)
+
+
+class A2Complaint_access(models.Model):
+    a2c_access_id = models.AutoField(primary_key=True)
+    leader = models.ForeignKey(User, on_delete=models.CASCADE)
+    a2c_access = models.BooleanField(default=False)
     valid_from = models.DateTimeField(auto_now=True)
     valid_till = models.DateTimeField(null=True)
     description = models.TextField(blank=True)

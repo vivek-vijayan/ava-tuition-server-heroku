@@ -67,22 +67,25 @@
         </center>
     </div>
 
-    <nav class="navbar navbar-dark bg-success">
+    <nav class="navbar navbar-dark bg-danger">
         <div class="container-fluid">
             <a class="navbar-brand display-5" href="#" style="font-weight: 300;">
-                <ion-icon name="swap-horizontal-outline"></ion-icon>
-                A2Presence
+                <ion-icon name="warning"></ion-icon>
+                A2Complaint
             </a>
         </div>
     </nav>
-
     <div class="container" style="margin-top: 20px;">
         <div class="row">
             <div class="col-sm-6">
-                <p class="h5">Student Check-In</p>
-                <p><small>Tuition students entry must be recorded here. Check-in Check-out time will be evaluated by the
-                        tuition administrator and this recording will calculate the attendance of the student on the
-                        particular date.</small></p>
+                <p class="h5">Student Complaint Portal</p>
+                <p><small>Tuition students complaints should be registered here. Action will be taken on the student based on the tuition policy. 
+                    <br></small></p>
+                    <div class="alert alert-danger" role="alert">
+                       <small>
+                            Message will be sent to the registered phone number once the complaint is raised
+                       </small> 
+                    </div>
             </div>
             <div class="col-sm-6">
                 <div class="col-sm-12" style="padding-top: 20px;">
@@ -91,7 +94,7 @@
                         <div class="input-group mb-3">
                             <label class="input-group-text" for="student_name_selection">Student</label>
                             <select class="form-select" id="student_name_selection" name="student_name_selection">
-
+    
                                 {% for x in total_students %}
                                 <option value="{{ x.1 }}">{{ x.0 }}</option>
                                 {% endfor %}
@@ -107,13 +110,18 @@
             </div>
         </div>
     </div>
+
     <div class="container" style="margin-top: 20px;">
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-12">
                 <div class="card border-success mb-3" style="max-width: 78rem;">
-                    <div class="card-header "><ion-icon name="ticket-outline"></ion-icon>  A2P Token</div>
+                    <div class="card-header ">
+                        <ion-icon name="ticket-outline"></ion-icon> A2C Token
+                    </div>
                     <div class="card-body text-success" style="text-align: center;">
-                        <h5 class="card-title text-dark"><ion-icon name="person-circle-outline" style="font-size:30px"></ion-icon> <br> {{leader}}</h5>
+                        <h5 class="card-title text-dark">
+                            <ion-icon name="person-circle-outline" style="font-size:30px"></ion-icon> <br> {{leader}}
+                        </h5>
                         <div class="text-success">
                             <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:">
                                 <use xlink:href="#info-fill" />
