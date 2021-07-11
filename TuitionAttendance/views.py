@@ -22,7 +22,7 @@ def A2P_homepage(request):
         students = Student.objects.all()
         total_students = []
         for x in students:
-            total_students.append([x.student_name, x.student_id])
+            total_students.append([x.student_name, x.student_name])
         return render(request, "A2P-portal.html", {'total_students': total_students, 'leader': request.user, 'expire_on': expire_on})
     else:
         return redirect(A2P_logout)
@@ -50,11 +50,10 @@ def A2P_query(request):
         checkedIn = False
         # checking the status
         try:
-            entry = Check_in_out_register.objects.filter(
-                student_id=request.POST['student_name_selection'], attendance_date=datetime.date.today())
+            entry = Check_in_out_register.objects.filter(student_name__username__contains=request.POST['student_name_selection'], attendance_date=datetime.date.today())
             checkedIn = True
             complain = Complaint.objects.filter(
-                student_id=request.POST['student_name_selection'], 
+                student_name=request.POST['student_name_selection'],
                 category="Check-in-out-portal",
                 resolved = False
                 )
@@ -64,13 +63,14 @@ def A2P_query(request):
             students = Student.objects.all()
             total_students = []
             queryStudent = request.POST['student_name_selection']
-            student = Student.objects.get(student_id=queryStudent)
+            student = Student.objects.get(
+                student_name__username__contains=queryStudent)
             for x in students:
-                total_students.append([x.student_name, x.student_id])
+                total_students.append([x.student_name, x.student_name])
             return render(request, "A2P-portal-student.html", {
                 'total_students': total_students,
                 'studentname': student.student_name,
-                'studentid' : student.student_id,
+                'studentid' : student.student_name,
                 'status': entry[0].status,
                 'check_in_time': entry[0].in_time,
                 'check_out_time' : entry[0].out_time,
@@ -84,13 +84,14 @@ def A2P_query(request):
             students = Student.objects.all()
             total_students = []
             queryStudent = request.POST['student_name_selection']
-            student = Student.objects.get(student_id=queryStudent)
+            student = Student.objects.get(
+                student_name__username__contains=queryStudent)
             for x in students:
-                total_students.append([x.student_name, x.student_id])
+                total_students.append([x.student_name, x.student_name])
             return render(request, "A2P-portal-student.html", {
                 'total_students': total_students,
                 'studentname': student.student_name,
-                'studentid': student.student_id,
+                'studentid': student.student_name,
                 'status' : 'Not Arrived',
                 'leader': request.user,
                 'expire_on': expire_on
@@ -105,14 +106,14 @@ def A2P_checkin(request):
         leader=request.user, valid_till__gte=datetime.datetime.now())
     if len(access) > 0:
         # Entry Creation
+        student = Student.objects.get(
+            student_name__username__contains=request.POST['student_name'])
         entry = Check_in_out_register.objects.create(
-            student_id=request.POST['student_id'], status="Checked In")
+            student_name=student.student_name, status="Checked In", in_time=datetime.datetime.now())
         entry.save()
         return redirect(A2P_display_action, username = (str(request.POST['student_name'])), action = 'Checked In successfully')
     else:
         return redirect(A2P_logout)
-
-
 
 @login_required(login_url=A2P_login)
 def A2P_checkout(request):
@@ -120,16 +121,19 @@ def A2P_checkout(request):
         leader=request.user, valid_till__gte=datetime.datetime.now())
     if len(access) > 0:
         entry = Check_in_out_register.objects.filter(
-            student_id=request.POST['student_id'], attendance_date=datetime.date.today()).update(out_time=datetime.datetime.now())
+            student_name__username__contains=request.POST['student_name'], attendance_date=datetime.date.today()).update(out_time=datetime.datetime.now())
         entry = Check_in_out_register.objects.filter(
-            student_id=request.POST['student_id'], attendance_date=datetime.date.today()).update(status="Checked Out")
-        entry = Check_in_out_register.objects.filter(student_id=request.POST['student_id'], attendance_date=datetime.date.today()).update(day_off=True)
+            student_name__username__contains=request.POST['student_name'], attendance_date=datetime.date.today()).update(status="Checked Out")
+        entry = Check_in_out_register.objects.filter(
+            student_name__username__contains=request.POST['student_name'], attendance_date=datetime.date.today()).update(day_off=True)
         return redirect(A2P_display_action, username=(str(request.POST['student_name'])), action='Checked out successfully')
     else:
         return redirect(A2P_logout)
 
 
-
+@login_required(login_url=A2P_login)
+def A2P_self_absence(request):
+    return redirect(A2P_display_action, username=(str(request.POST['student_name'])), action='Absent registered successfully')
 
 
 def A2P_logout(request):

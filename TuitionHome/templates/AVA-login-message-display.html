@@ -90,11 +90,11 @@
         </center>
     </div>
 
-    <nav class="navbar navbar-dark bg-success">
+    <nav class="navbar navbar-dark bg-info">
         <div class="container-fluid">
             <a class="navbar-brand display-5" href="#" style="font-weight: 300;">
-                <ion-icon name="swap-horizontal-outline"></ion-icon>
-                A2Portal
+                <ion-icon name="finger-print"></ion-icon>
+                A2Auth
             </a>
         </div>
     </nav>
@@ -104,13 +104,7 @@
             <div class="col-sm-6">
                 <center>
                     <div class="wrapper">
-                        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
-                            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 98.5 98.5"
-                            enable-background="new 0 0 98.5 98.5" xml:space="preserve">
-                            <path class="checkmark" fill="none" stroke-width="8" stroke-miterlimit="10"
-                                d="M81.7,17.8C73.5,9.3,62,4,49.2,4
-                    	C24.3,4,4,24.3,4,49.2s20.3,45.2,45.2,45.2s45.2-20.3,45.2-45.2c0-8.6-2.4-16.6-6.5-23.4l0,0L45.6,68.2L24.7,47.3" />
-                        </svg>
+                        <img src="{% static 'login_success.gif' %}" width="100px" alt="" srcset="">
                     </div>
                     <h3 class="h4">{{ username }}</h3>
                     <p><small>{{ message }}</small></p>
@@ -123,8 +117,8 @@
 </body>
 <script>
     setTimeout(function () {
-        window.location.href = '/a2presence/home';
-    }, 4000);
+        window.location.href = '/home';
+    }, 2000);
 </script>
 
 </html>

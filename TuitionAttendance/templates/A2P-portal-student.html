@@ -83,55 +83,44 @@
         <div class="row">
             <div class="col-sm-6">
                 <p class="h5">Student Check-In</p>
-                <p><small>showing the result of 1 filter</small></p>
+                <span class="badge bg-danger">Leader</span><br>
+                <p><small>showing the result of {{studentname}}, if you want to change the selection click on the below change filter option</small></p>
             </div>
+            <a href="/home">
+                <button type="submit" class="btn btn-outline-secondary">
+                    <ion-icon name="home"></ion-icon> Go to Home
+                </button>
+            </a>
+            <br>
+            <hr style="margin-top: 20px;">
             <div class="col-sm-12">
-                <div class="accordion accordion-flush bg-outline-danger" id="accordionFlushExample">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="flush-headingOne">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#flush-collapseOne" aria-expanded="false"
-                                aria-controls="flush-collapseOne">
-                                Change Filter
-                            </button>
-                        </h2>
-                        <div id="flush-collapseOne" class="accordion-collapse collapse"
-                            aria-labelledby="flush-headingOne" data-parent="#accordionFlushExample">
-                            <div class="accordion-body">
-                                <div class="col-sm-12">
-                                    <div class="col-sm-12" style="padding-top: 20px;">
-                                        <form action="query" method="post">
-                                            {% csrf_token %}
-                                            <div class="input-group mb-3">
-                                                <label class="input-group-text"
-                                                    for="student_name_selection">Student</label>
-                                                <select class="form-select" id="student_name_selection"
-                                                    name="student_name_selection">
-
-                                                    {% for x in total_students %}
-                                                    {% if x.0 == studentname %}
-                                                    <option value="{{ x.1 }}" selected>{{ x.0 }}</option>
-                                                    {% else %}
-                                                    <option value="{{ x.1 }}">{{ x.0 }}</option>
-                                                    {% endif %}
-                                                    {% endfor %}
-                                                </select>
-                                            </div>
-                                    </div>
-                                    <div class="row" style="padding-top: 10px;">
-                                        <div class="col-sm-12">
-                                            <button type="submit" class="btn btn-dark">Check Status</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="col-sm-12" style="padding-top: 20px;">
+                    <form action="query" method="post">
+                        {% csrf_token %}
+                        <div class="input-group mb-3">
+                            <label class="input-group-text" for="student_name_selection">Student</label>
+                            <select class="form-select" id="student_name_selection" name="student_name_selection">
+            
+                                {% for x in total_students %}
+                                {% if x.0 == studentname %}
+                                <option value="{{ x.1 }}" selected>{{ x.0 }}</option>
+                                {% else %}
+                                <option value="{{ x.1 }}">{{ x.0 }}</option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
                         </div>
+                </div>
+                <div class="row" style="padding-top: 10px;">
+                    <div class="col-sm-12">
+                        <button type="submit" class="btn btn-dark">Check Status</button>
+                        </form>
                     </div>
                 </div>
             </div>
-
+            
         </div>
+        
     </div>
     <!-- Students -->
     <div class="container" style="margin-top: 20px;">
@@ -155,10 +144,10 @@
                             </div>
                             <div class="col-sm-3">
                                 <div class="col-sm-12">
-                                    {% if status == "Not Arrived" %}
-                                    <small class="card-text">Status: <span class="badge rounded-pill bg-danger">{{status }}</span></small>
+                                    {% if status == "Not Arrived" or status == "Absent" %}
+                                    <small class="card-text">Status: <span class="badge rounded-pill bg-danger">{{status}}</span></small>
                                     {% else %}
-                                    <small class="card-text">Status: <span class="badge rounded-pill bg-success">{{status }}</span></small>
+                                    <small class="card-text">Status: <span class="badge rounded-pill bg-success">{{status}}</span></small>
                                     {% endif %}
                                 </div>
                             </div>
@@ -166,21 +155,23 @@
 
 
                         <div style="padding-top: 20px;">
-                            {% if status != "Not Arrived" %}
-                            <p class="card-text">
-                            <div class="alert alert-success d-flex align-items-center" role="alert">
-                                <div>
-                                    <small>
-                                        <b> In-time: </b> {{check_in_time}}
-
-                                        {% if day_off == True %}
-                                        <br>
-                                        <b> Out-time: </b> {{check_out_time}}
-                                        {% endif %}
-                                    </small>
+                            {% if status != "Absent" %}
+                                {% if status != "Not Arrived" %}
+                                <p class="card-text">
+                                <div class="alert alert-success d-flex align-items-center text-success" role="alert">
+                                    <div>
+                                        <small>
+                                            <b> In-time: </b> {{check_in_time}}
+                                
+                                            {% if day_off == True %}
+                                            <br>
+                                            <b> Out-time: </b> {{check_out_time}}
+                                            {% endif %}
+                                        </small>
+                                    </div>
                                 </div>
-                            </div>
-                            </p>
+                                </p>
+                                {% endif %}
                             {% endif %}
                             {% if day_off != True %}
                             {% if status == "Not Arrived" %}
@@ -215,7 +206,7 @@
             <div class="col-sm-12">
                 <div class="card border-success mb-3" style="max-width: 78rem;">
                     <div class="card-header ">
-                        <ion-icon name="ticket-outline"></ion-icon> A2P Token
+                        <ion-icon name="ticket-outline"></ion-icon> A2P Admin Token
                     </div>
                     <div class="card-body text-success" style="text-align: center;">
                         <h5 class="card-title text-dark">

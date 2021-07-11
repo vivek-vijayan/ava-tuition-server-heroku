@@ -5,10 +5,12 @@ from django.db.models.aggregates import StdDev
 # Create your models here.
 class Student(models.Model):
     student_id = models.AutoField(primary_key=True)
-    student_name = models.CharField(max_length=20)
+    student_name = models.ForeignKey(User, on_delete=models.CASCADE)
     student_phone_number = models.IntegerField(null=True)
     student_class = models.IntegerField(null=True)
     date_of_joining = models.DateTimeField()
+    last_date = models.DateTimeField(null=True)
+    is_active = models.BooleanField(default=True)
     fees = models.IntegerField(null=True)
 
     def __str__(self):
@@ -29,7 +31,7 @@ class Leader(models.Model):
     
     def __str__(self):
         return str(self.leader_name) + " - " + str(self.leader_roles)
-    
+
     # App access: 
 class A2Presence_access(models.Model):
     a2p_access_id = models.AutoField(primary_key=True)

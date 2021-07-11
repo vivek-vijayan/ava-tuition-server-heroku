@@ -90,30 +90,40 @@
         </center>
     </div>
 
-    <nav class="navbar navbar-dark bg-success">
+    <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand display-5" href="#" style="font-weight: 300;">
-                <ion-icon name="swap-horizontal-outline"></ion-icon>
-                A2Portal
+                <ion-icon name="log-out"></ion-icon>
+                Self absent Request
             </a>
         </div>
     </nav>
 
     <div class="container" style="margin-top: 20px;">
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-12">
                 <center>
                     <div class="wrapper">
-                        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
-                            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 98.5 98.5"
-                            enable-background="new 0 0 98.5 98.5" xml:space="preserve">
-                            <path class="checkmark" fill="none" stroke-width="8" stroke-miterlimit="10"
-                                d="M81.7,17.8C73.5,9.3,62,4,49.2,4
-                    	C24.3,4,4,24.3,4,49.2s20.3,45.2,45.2,45.2s45.2-20.3,45.2-45.2c0-8.6-2.4-16.6-6.5-23.4l0,0L45.6,68.2L24.7,47.3" />
-                        </svg>
+                        <img src="{% static 'confirm.gif'%}" width="100px" alt="" srcset="">
                     </div>
                     <h3 class="h4">{{ username }}</h3>
-                    <p><small>{{ message }}</small></p>
+                    <p>Do you want to raise the self absent request?</p>
+
+                    <form action="self-absent-apply" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="username" value = "{{username}}" >
+                        <button type="submit" style="width: 100px;" class="btn btn-success btn-sm">Yes</button>
+                        <button type="button" style="width: 100px;" onclick="window.location.href='\home'"
+                        class="btn btn-danger btn-sm">No</button>
+                    </form>
+                    <br>
+                    <br>
+                    <div class="alert alert-warning" role="alert">
+                        <p><small>When you are back checking in to tuition, you have to submit the
+                                <code>Leave Letter</code> to the respective
+                                leader</small></p>
+                    </div>
+
                 </center>
             </div>
         </div>
@@ -121,10 +131,6 @@
 
 
 </body>
-<script>
-    setTimeout(function () {
-        window.location.href = '/a2presence/home';
-    }, 4000);
-</script>
+
 
 </html>
