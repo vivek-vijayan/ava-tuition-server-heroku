@@ -68,6 +68,7 @@ def AVA_Home(request):
         else:
             is_leader =False
             leader_roles = ""
+        
         if len(student) > 0:
             fullname = str(request.user.first_name) 
             return render(request, "AVA-home.html", {
@@ -85,7 +86,8 @@ def AVA_Home(request):
                 'day_off' :day_off,
                 'check_in_time' : check_in_time,
                 'check_out_time': check_out_time,
-                'logo': request.user.last_name
+                'logo': request.user.last_name,
+                'class':student[0].student_class
             })
         else:
             return render(request, "AVA-Error.html", {'username': request.user, 'message': "Your account has been locked"})

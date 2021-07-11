@@ -384,7 +384,9 @@
                                 class="hour ml-1"></span> </div>
                         <div>
                             {% if show_stat == True %}
+                            
                             <span class="badge bg-success">{{fees}}</span>
+                            
                             {% endif%}
 
                         </div>
@@ -395,14 +397,17 @@
                             width="60" />
                     </div>
                     <div class="" style="padding-left: 20px;">
-                        <div class="d-flex flex-row mb-1"> <span> {{ fullname }}</span>
+                        <div class="d-flex flex-row mb-1"> <span> {{ fullname }}</span> 
                         </div>
                         <div>
                             <p>
                                 {% if show_stat == True %}
                                 <small>
                                     <ion-icon name="calendar-outline"></ion-icon> {{date_of_joining}}
+                                    <br>
                                 </small>
+                                    <span class="badge rounded-pill bg-secondary text-light">Class {{class}}</span>
+                                
                                 {% else %}
                                 <small>
                                     <span class="badge bg-success">Administrator</span>
@@ -533,6 +538,8 @@
         </div>
     </div>
     {% endif %}
+    <div style="margin-bottom: 100px;">
+    </div>
 </body>
 
 </html>

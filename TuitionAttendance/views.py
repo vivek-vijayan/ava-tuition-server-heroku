@@ -23,7 +23,8 @@ def A2P_homepage(request):
         students = Student.objects.all()
         total_students = []
         for x in students:
-            total_students.append([x.student_name, x.student_name])
+            name = User.objects.filter(username=x.student_name, is_active=True)
+            total_students.append([x.student_name, name[0].first_name])
         return render(request, "A2P-portal.html", {'total_students': total_students, 'leader': request.user, 'expire_on': expire_on})
     else:
         return redirect(A2P_logout)
@@ -70,7 +71,9 @@ def A2P_query(request):
             if len(stu_user) > 0:
                 studentimage = stu_user[0].last_name
             for x in students:
-                total_students.append([x.student_name, x.student_name])
+                name = User.objects.filter(
+                    username=str(x.student_name), is_active=True)
+                total_students.append([x.student_name, name[0].first_name])
             return render(request, "A2P-portal-student.html", {
                 'total_students': total_students,
                 'studentname': student.student_name,

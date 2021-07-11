@@ -6,7 +6,7 @@ from django.db.models.aggregates import StdDev
 class Student(models.Model):
     student_id = models.AutoField(primary_key=True)
     student_name = models.ForeignKey(User, on_delete=models.CASCADE)
-    student_phone_number = models.IntegerField(null=True)
+    student_phone_number = models.CharField(blank=True, max_length=500, default="0")
     student_class = models.IntegerField(null=True)
     date_of_joining = models.DateTimeField()
     last_date = models.DateTimeField(null=True)

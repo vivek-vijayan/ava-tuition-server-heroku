@@ -95,7 +95,7 @@
                             <select class="form-select" id="student_name_selection" name="student_name_selection">
 
                                 {% for x in total_students %}
-                                <option value="{{ x.0 }}">{{ x.0 }}</option>
+                                <option value="{{ x.0 }}">{{ x.1 }}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -143,7 +143,8 @@
             </div>
         </div>
     </div>
-
+<div style="margin-bottom: 100px;">
+</div>
 </body>
 
 </html>

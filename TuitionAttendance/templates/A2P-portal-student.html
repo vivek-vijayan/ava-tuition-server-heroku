@@ -103,9 +103,9 @@
             
                                 {% for x in total_students %}
                                 {% if x.0 == studentname %}
-                                <option value="{{ x.1 }}" selected>{{ x.0 }}</option>
+                                <option value="{{ x.0 }}" selected>{{ x.1 }}</option>
                                 {% else %}
-                                <option value="{{ x.1 }}">{{ x.0 }}</option>
+                                <option value="{{ x.0 }}">{{ x.1 }}</option>
                                 {% endif %}
                                 {% endfor %}
                             </select>
@@ -229,7 +229,8 @@
             </div>
         </div>
     </div>
-
+<div style="margin-bottom: 100px;">
+</div>
 </body>
 
 </html>
