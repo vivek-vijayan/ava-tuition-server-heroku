@@ -381,88 +381,109 @@
                     </h6>
                     <div class="time d-flex flex-row align-items-center justify-content-between mt-3">
                         <div class="d-flex align-items-center"> <i class="fa fa-clock-o clock"></i> <span
-                                class="hour ml-1">User profile</span> </div>
+                                class="hour ml-1"></span> </div>
                         <div>
+                            {% if show_stat == True %}
                             <span class="badge bg-success">{{fees}}</span>
+                            {% endif%}
+
                         </div>
                     </div>
                 </div>
                 <div class="second d-flex flex-row mt-2">
-                    <div class="image mr-3"> <img src="{% static 'students' %}/{{username}}.jpg" class="rounded-circle"
+                    <div class="image mr-3"> <img src="{{logo}}" class="rounded-circle"
                             width="60" />
                     </div>
                     <div class="" style="padding-left: 20px;">
                         <div class="d-flex flex-row mb-1"> <span> {{ fullname }}</span>
                         </div>
-                        <div> 
+                        <div>
                             <p>
+                                {% if show_stat == True %}
                                 <small>
                                     <ion-icon name="calendar-outline"></ion-icon> {{date_of_joining}}
                                 </small>
+                                {% else %}
+                                <small>
+                                    <span class="badge bg-success">Administrator</span>
+                                </small>
+                                {% endif%}
                             </p>
                             {% if is_leader == True %}
-                                <span class="badge bg-dark">{{ leader_roles }}</span>
+                            <span class="badge bg-dark">{{ leader_roles }}</span>
                             {% endif %}
-                            
+
                         </div>
                     </div>
                 </div>
                 <hr class="line-color">
                 {% if is_leader == True %}
-                    <p><small>
+                <p><small>
                         {{ lead }}
                     </small></p>
                 {% endif %}
 
-                {% if show_stat == True%}
-                <p><ion-icon name="stats-chart"></ion-icon> Status</p>
-                    <div class="col-sm-3">
-                        <div class="col-sm-12">
-                            {% if status == "Not Arrived" or status == "Absent" %}
-                            <small class="card-text">Status: <span class="badge rounded-pill bg-danger">{{status}}</span></small>
-                            {% else %}
-                            <small class="card-text">Status: <span class="badge rounded-pill bg-success">{{status}}</span></small>
-                            {% endif %}
-                        </div>
-                    </div>
-                    {% if status != "Absent" %}
-                        {% if status != "Not Arrived" %}
-                        <p class="card-text">
-                        <div class="alert alert-success d-flex align-items-center text-success" role="alert">
-                            <div>
-                                <small>
-                                    <b> In-time: </b> {{check_in_time}}
-                        
-                                    {% if day_off == True %}
-                                    <br>
-                                    <b> Out-time: </b> {{check_out_time}}
-                                    {% endif %}
-                                </small>
-                            </div>
-                        </div>
-                        </p>
-                        <hr>
+                {% if show_stat == True %}
+                <p>
+                    <ion-icon name="stats-chart"></ion-icon> Status
+                </p>
+                <div class="col-sm-3">
+                    <div class="col-sm-12">
+                        {% if status == "Not Arrived" or status == "Absent" %}
+                        <small class="card-text">Status: <span
+                                class="badge rounded-pill bg-danger">{{status}}</span></small>
+                        {% else %}
+                        <small class="card-text">Status: <span
+                                class="badge rounded-pill bg-success">{{status}}</span></small>
                         {% endif %}
-                    {% endif %}
+                    </div>
+                </div>
+                {% if status != "Absent" %}
+                {% if status != "Not Arrived" %}
+                <p class="card-text">
+                <div class="alert alert-success d-flex align-items-center text-success" role="alert">
+                    <div style="font-size: small;">
+                        
+                            <b><ion-icon name="log-in"></ion-icon> In-time: </b> {{check_in_time}}
+
+                            {% if day_off == True %}
+                            <br>
+                            <b><ion-icon name="log-out"></ion-icon> Out-time: </b> {{check_out_time}}
+                            {% endif %}
+                        
+                    </div>
+                </div>
+                </p>
+                <hr>
+                {% endif %}
+                {% endif %}
                 {% endif %}
 
-                
+
                 <div class="third mt-4">
-                    {% if status == "Not Arrived" or status == "Absent" %}
-                    <button type="submit" onclick="window.location.href ='self-absent-raise'" class="btn btn-success btn-sm text-light">Absent Request</button>
+                    {% if status == "Not Arrived"  %}
+                    <button type="submit" onclick="window.location.href ='self-absent-raise'"
+                        class="btn btn-success btn-sm text-light">Absent Request</button>
                     {% endif %}
-                        <button type="submit" onclick="window.location.href ='logout'" class="btn btn-danger btn-sm">Logout</button>
+                    <button type="submit" onclick="window.location.href ='logout'"
+                        class="btn btn-danger btn-sm">Logout</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="container" style="margin-top: 0px;">
+    {% if status != "Absent" %}
+    <div class="container" style="margin-top: 30px;">
         <div class="row">
-            <h6>
-                <ion-icon name="link"></ion-icon> Valid Links
-            </h6>
-            <p><small>Select the below card to open the portal</small></p>
+            <div style="padding-left: 30px;">
+                <h6>
+                    <ion-icon name="link"></ion-icon> Quick Links
+                </h6>
+                <p><small>Select the below card to open the respective portal. </small></p>
+
+            </div>
+            
+
 
             <!-- A2Presence portal-->
             {% if a2p_access == True %}
@@ -484,9 +505,34 @@
                 </div>
             </div>
             {% endif %}
+
+
+
+
         </div>
     </div>
+    {% else %}
+     
+    <div class="container">
+        <div style="padding-left: 20px;">
+            <h6>
+                <ion-icon name="link"></ion-icon> Quick Links
+            </h6>
+            <p><small>Select the below card to open the respective portal. </small></p>
+        
+        </div>
+        <div class="container">
+            
+            <center>
 
+                <h1 style="color: rgb(77, 77, 77);"><ion-icon name="lock-closed"></ion-icon></h1> 
+                <p><small>
+                    Leader Quick links are locked as you are on leave. will be activated once you check-in tomorrow
+                </small></p>
+            </center>
+        </div>
+    </div>
+    {% endif %}
 </body>
 
 </html>

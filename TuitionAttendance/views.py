@@ -5,6 +5,7 @@ from TuitionComplaintBox.models import ComplaintBox
 import datetime
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 # Create your views here.
 
 # A2Portal   -------------------------------------------
@@ -65,6 +66,9 @@ def A2P_query(request):
             queryStudent = request.POST['student_name_selection']
             student = Student.objects.get(
                 student_name__username__contains=queryStudent)
+            stu_user = User.objects.filter(username=queryStudent)
+            if len(stu_user) > 0:
+                studentimage = stu_user[0].last_name
             for x in students:
                 total_students.append([x.student_name, x.student_name])
             return render(request, "A2P-portal-student.html", {
@@ -77,7 +81,8 @@ def A2P_query(request):
                 'day_off': entry[0].day_off,
                 'leader': request.user,
                 'total_complain': complain_count,
-                'expire_on': expire_on
+                'expire_on': expire_on,
+                'studentimage': studentimage,
             })
         except:
             checkedIn = False
@@ -88,13 +93,17 @@ def A2P_query(request):
                 student_name__username__contains=queryStudent)
             for x in students:
                 total_students.append([x.student_name, x.student_name])
+            stu_user = User.objects.filter(username=queryStudent)
+            if len(stu_user) > 0:
+                studentimage = stu_user[0].last_name
             return render(request, "A2P-portal-student.html", {
                 'total_students': total_students,
                 'studentname': student.student_name,
                 'studentid': student.student_name,
                 'status' : 'Not Arrived',
                 'leader': request.user,
-                'expire_on': expire_on
+                'expire_on': expire_on,
+                'studentimage': studentimage,
                 })
     else:
         return redirect(A2P_logout)

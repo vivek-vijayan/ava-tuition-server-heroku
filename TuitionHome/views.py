@@ -32,8 +32,7 @@ def AVA_logginer(request):
 def AVA_Home(request):
     if request.user.is_superuser:
         a2p_access = True
-        fullname = str(request.user.first_name) + \
-            " " + str(request.user.last_name)
+        fullname = str(request.user.first_name)
         return render(request, "AVA-home.html", {
             'username': request.user,
             'fullname': fullname,
@@ -41,6 +40,7 @@ def AVA_Home(request):
             'fees': "Administrator",
             'a2p_access' : a2p_access,
             'show_stat' : False,
+            'logo' : request.user.last_name
         })
     elif request.user.is_active:
         # A2Presence access check
@@ -69,8 +69,7 @@ def AVA_Home(request):
             is_leader =False
             leader_roles = ""
         if len(student) > 0:
-            fullname = str(request.user.first_name) + \
-                " " + str(request.user.last_name)
+            fullname = str(request.user.first_name) 
             return render(request, "AVA-home.html", {
                 'username': request.user,
                 'fullname': fullname,
@@ -85,7 +84,8 @@ def AVA_Home(request):
                 'status': status,
                 'day_off' :day_off,
                 'check_in_time' : check_in_time,
-                'check_out_time': check_out_time
+                'check_out_time': check_out_time,
+                'logo': request.user.last_name
             })
         else:
             return render(request, "AVA-Error.html", {'username': request.user, 'message': "Your account has been locked"})
