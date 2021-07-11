@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from TuitionDB.models import A2Presence_access, Student, Leader
-from TuitionAttendance.models import Check_in_out_register
+from TuitionAttendance.models import Check_in_out_db_register
 # Create your views here.
 import datetime
 
@@ -46,10 +46,10 @@ def AVA_Home(request):
         # A2Presence access check
         a2p = A2Presence_access.objects.filter(leader=request.user)
         a2p_access = True if len(a2p) > 0 else False 
-        entry = Check_in_out_register.objects.filter(
+        entry = Check_in_out_db_register.objects.filter(
             student_name=request.user, attendance_date=datetime.date.today(), raised_absent = True)
         absent = True if len(entry) > 0 else False
-        entry = Check_in_out_register.objects.filter(
+        entry = Check_in_out_db_register.objects.filter(
             student_name=request.user, attendance_date=datetime.date.today())
         status = entry[0].status if len(entry) > 0 else "Not Arrived"
         if len(entry)  > 0:
@@ -104,7 +104,7 @@ def AVA_A2P_self_absent_request(request):
 def AVA_A2P_self_absent_apply(request):
     student = Student.objects.get(
         student_name__username__contains=request.POST['username'])
-    entry = Check_in_out_register.objects.create(
+    entry = Check_in_out_db_register.objects.create(
         student_name=student.student_name, status="Absent", raised_absent=True, day_off=True)
     entry.save()
     return render(request, "AVA-message-display.html", {'username': request.user, 'message': "Leave applied successfully"})

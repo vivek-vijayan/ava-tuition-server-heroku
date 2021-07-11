@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from TuitionDB.models import Student, Leader, A2Presence_access
-from TuitionAttendance.models import Check_in_out_register
+from TuitionAttendance.models import Check_in_out_db_register
 from TuitionComplaintBox.models import Complaint
 import datetime
 from django.contrib.auth import authenticate, login, logout
@@ -50,7 +50,7 @@ def A2P_query(request):
         checkedIn = False
         # checking the status
         try:
-            entry = Check_in_out_register.objects.filter(student_name__username__contains=request.POST['student_name_selection'], attendance_date=datetime.date.today())
+            entry = Check_in_out_db_register.objects.filter(student_name__username__contains=request.POST['student_name_selection'], attendance_date=datetime.date.today())
             checkedIn = True
             complain = Complaint.objects.filter(
                 student_name=request.POST['student_name_selection'],
@@ -108,7 +108,7 @@ def A2P_checkin(request):
         # Entry Creation
         student = Student.objects.get(
             student_name__username__contains=request.POST['student_name'])
-        entry = Check_in_out_register.objects.create(
+        entry = Check_in_out_db_register.objects.create(
             student_name=student.student_name, status="Checked In", in_time=datetime.datetime.now())
         entry.save()
         return redirect(A2P_display_action, username = (str(request.POST['student_name'])), action = 'Checked In successfully')
@@ -120,11 +120,11 @@ def A2P_checkout(request):
     access = A2Presence_access.objects.filter(
         leader=request.user, valid_till__gte=datetime.datetime.now())
     if len(access) > 0:
-        entry = Check_in_out_register.objects.filter(
+        entry = Check_in_out_db_register.objects.filter(
             student_name__username__contains=request.POST['student_name'], attendance_date=datetime.date.today()).update(out_time=datetime.datetime.now())
-        entry = Check_in_out_register.objects.filter(
+        entry = Check_in_out_db_register.objects.filter(
             student_name__username__contains=request.POST['student_name'], attendance_date=datetime.date.today()).update(status="Checked Out")
-        entry = Check_in_out_register.objects.filter(
+        entry = Check_in_out_db_register.objects.filter(
             student_name__username__contains=request.POST['student_name'], attendance_date=datetime.date.today()).update(day_off=True)
         return redirect(A2P_display_action, username=(str(request.POST['student_name'])), action='Checked out successfully')
     else:

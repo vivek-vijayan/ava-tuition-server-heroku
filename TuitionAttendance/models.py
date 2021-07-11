@@ -3,7 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
 
-class Check_in_out_register(models.Model):
+class Check_in_out_db_register(models.Model):
     entry_id = models.AutoField(primary_key=True, default= None)
     student_name = models.ForeignKey(User, on_delete=models.CASCADE)
     attendance_date = models.DateField(auto_now=True)
@@ -12,3 +12,6 @@ class Check_in_out_register(models.Model):
     out_time = models.DateTimeField(null=True)
     status = models.CharField(max_length=200, default="Not Arrived")
     raised_absent = models.BooleanField(default=False)
+
+    def __str__(self) -> str:
+        return str(self.student_name) + " ----> Date :" + str(self.attendance_date)
