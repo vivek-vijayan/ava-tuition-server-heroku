@@ -5,10 +5,6 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('TuitionDB', '0006_delete_all_portal'),
-    ]
-
     operations = [
         migrations.AlterField(
             model_name='student',
