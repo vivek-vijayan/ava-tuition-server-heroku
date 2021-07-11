@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from TuitionDB.models import Student, Leader, A2Presence_access
 from TuitionAttendance.models import Check_in_out_db_register
-from TuitionComplaintBox.models import Complaint
+from TuitionComplaintBox.models import ComplaintBox
 import datetime
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -52,7 +52,7 @@ def A2P_query(request):
         try:
             entry = Check_in_out_db_register.objects.filter(student_name__username__contains=request.POST['student_name_selection'], attendance_date=datetime.date.today())
             checkedIn = True
-            complain = Complaint.objects.filter(
+            complain = ComplaintBox.objects.filter(
                 student_name=request.POST['student_name_selection'],
                 category="Check-in-out-portal",
                 resolved = False

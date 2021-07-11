@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Complaint
+from .models import ComplaintBox
 from TuitionDB.models import Student, Leader, A2Complaint_access
 import datetime
 from django.contrib.auth import authenticate, login, logout
@@ -31,7 +31,7 @@ def A2P_complain_register(request):
     access = A2Complaint_access.objects.filter(
         leader=request.user, valid_till__gte=datetime.datetime.now())
     if len(access) > 0:
-        complain = Complaint.objects.create(
+        complain = ComplaintBox.objects.create(
             complaint_description=request.POST['complaint'],
             student_id=request.POST['studentid'],
             student_name=request.POST['studentname'],

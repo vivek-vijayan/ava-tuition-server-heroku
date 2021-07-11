@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 
 
-class Complaint(models.Model):
+class ComplaintBox(models.Model):
     complaint_id = models.AutoField(primary_key=True, default=None)
     complaint_description = models.TextField(blank=True)
     student_id = models.IntegerField(default=0)
