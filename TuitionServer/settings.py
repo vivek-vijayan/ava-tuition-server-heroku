@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'TuitionAttendance',
     'TuitionDB',
     'TuitionHome',
+    'TuitionStudyRegister',
     'TuitionComplaintBox',
     'django.contrib.admin',
     'django.contrib.auth',

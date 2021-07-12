@@ -409,16 +409,12 @@
                                 </small>
                                     <span class="badge rounded-pill bg-secondary text-light">Class {{class}}</span>
                                 
-                                {% else %}
-                                <small>
-                                    <span class="badge bg-success">Administrator</span>
-                                </small>
+                               
                                 {% endif%}
                             </p>
                             {% if is_leader == True %}
                             <span class="badge bg-dark">{{ leader_roles }}</span>
                             {% endif %}
-
                         </div>
                     </div>
                 </div>
@@ -470,9 +466,24 @@
                     {% if status == "Not Arrived"  %}
                     <button type="submit" onclick="window.location.href ='self-absent-raise'"
                         class="btn btn-success btn-sm text-light">Absent Request</button>
+                        
                     {% endif %}
-                    <button type="submit" onclick="window.location.href ='logout'"
-                        class="btn btn-danger btn-sm">Logout</button>
+                    {% if show_stat == True %}
+                        <hr>
+                    {% endif %}
+
+                    {% if leader_roles == "Administrator" %}
+                        <p>
+                            <ion-icon name="flash"></ion-icon> Admin settings
+                        </p>
+                        <button onclick="window.location.href='/admin'" class="btn btn-danger btn-sm text-light">Admin site</button>
+                        
+                        <hr>
+                    {% endif %}
+                    <p>
+                        <ion-icon name="options"></ion-icon> Profile settings</p>
+                    <button onclick="window.location.href='password-change'" class="btn btn-dark btn-sm text-light">Change Password</button>
+                    <button type="submit" onclick="window.location.href ='logout'" class="btn btn-danger btn-sm">Logout</button>
                 </div>
             </div>
         </div>

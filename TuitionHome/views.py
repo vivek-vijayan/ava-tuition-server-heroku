@@ -15,6 +15,42 @@ def AVA_login(request):
         return render(request, "AVA-login.html", {})
 
 
+@login_required(login_url=AVA_login)
+def AVA_password_reset(request):
+    access_to_change_password = User.objects.filter(username=request.user, is_staff=True, is_active=True)
+    if len(access_to_change_password) > 0:
+        return render(request, "AVA-password-change.html", {'username': request.user})
+    else:
+        return render(request, "AVA-Error2.html", {'username': request.user, 'message': "Password change option has been locked by administrator"})
+
+
+@login_required(login_url=AVA_login)
+def AVA_change_password(request):
+    new_password = request.POST['new_password']
+    repeat_password = request.POST['repeat_password']
+    access_to_change_password = User.objects.filter(
+        username=request.user, is_staff=True, is_active=True)
+    if len(access_to_change_password) > 0:
+        if new_password == repeat_password:
+            access_to_change_password[0].set_password(new_password)
+            access_to_change_password[0].save()
+            return render(request, "AVA-message-display.html", {
+                'username': request.user,
+                'message': "Password has been reset successfully"
+            })
+        else:
+            return render(request, "AVA-password-change.html", {
+                'username' : request.user,
+                'is_error' : True,
+                'error': "Old password is correct"
+            })
+
+    else:
+        return render(request, "AVA-Error2.html", {'username': request.user, 'message': "Password change option has been locked by administrator"})
+
+
+
+
 def AVA_logginer(request):
     username = request.POST['username']
     password = request.POST['password']
@@ -41,11 +77,14 @@ def AVA_Home(request):
             'fees': "Administrator",
             'a2p_access' : a2p_access,
             'show_stat' : False,
-            'logo' : request.user.last_name
+            'is_leader': True,
+            'logo' : request.user.last_name,
+            'leader_roles': "Administrator",
         })
     elif request.user.is_active:
         # A2Presence access check
-        a2p = A2Presence_access.objects.filter(leader=request.user)
+        a2p = A2Presence_access.objects.filter(
+            leader=request.user, valid_till__gte=datetime.datetime.now())
         a2p_access = True if len(a2p) > 0 else False 
         entry = Check_in_out_db_register.objects.filter(
             student_name=request.user, attendance_date=datetime.date.today(), raised_absent = True)

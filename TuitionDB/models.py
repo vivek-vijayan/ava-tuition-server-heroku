@@ -18,7 +18,7 @@ class Student(models.Model):
 
 class Leader(models.Model):
     position = (
-        ('Admininstrator', 'Admininstrator'),
+        ('Administrator', 'Administrator'),
         ('Check-in Leader', 'Check-in Leader'),
         ('File Leader', 'File Leader'),
         ('Diary Leader', 'Diary Leader')
