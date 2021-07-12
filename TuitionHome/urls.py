@@ -16,7 +16,7 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from .views import AVA_login, AVA_logginer, AVA_Home, AVA_logout, AVA_A2P_self_absent_apply, AVA_A2P_self_absent_request
+from .views import AVA_login, AVA_logginer, AVA_Home, AVA_logout, AVA_A2P_self_absent_apply, AVA_A2P_self_absent_request, show_leader
 
 
 
@@ -27,4 +27,5 @@ urlpatterns = [
     path('self-absent-raise', AVA_A2P_self_absent_request, name="self-absent-raise"),
     path('self-absent-apply', AVA_A2P_self_absent_apply, name="self-absent-apply"),
     path('home', AVA_Home, name="AVA_logginer"),
+    path('show/<user_id>', show_leader, name="show")
 ]
