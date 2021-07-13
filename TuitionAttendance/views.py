@@ -28,6 +28,7 @@ def A2P_homepage(request):
             name = User.objects.filter(username=x.student_name, is_active=True)
             total_students.append([x.student_name, name[0].first_name])
         all_students = []
+        count = 0
         for x in students:
             name = User.objects.filter(
                   username=x.student_name, is_active=True)
@@ -38,9 +39,10 @@ def A2P_homepage(request):
                 at_reg_status = att_reg[0].status
             else:
                 at_reg_status = "Not Arrived"
+            count = count + 1
             all_students.append(
                 [x.student_name, name[0].first_name, at_reg_status])
-        return render(request, "A2P-portal.html", {'all_students': all_students, 'total_students': total_students, 'leader': request.user, 'expire_on': expire_on})
+        return render(request, "A2P-portal.html", {'all_students': all_students, 'count': count,  'total_students': total_students, 'leader': request.user, 'expire_on': expire_on})
     else:
         return redirect(A2P_logout)
 
@@ -94,6 +96,7 @@ def A2P_query(request):
                     [x.student_name, name[0].first_name])
 
             all_students = []
+            count = 0
             for x in students:
                 name = User.objects.filter(
                     username=x.student_name, is_active=True)
@@ -104,12 +107,14 @@ def A2P_query(request):
                     at_reg_status = att_reg[0].status
                 else:
                     at_reg_status = "Not Arrived"
+                count = count + 1
                 all_students.append(
                     [x.student_name, name[0].first_name, at_reg_status])
 
             print(total_students)
             return render(request, "A2P-portal-student.html", {
                 'all_students': all_students,
+                'count' : count,
                 'total_students': total_students,
                 'studentname': student.student_name,
                 'studentid': student.student_name,
@@ -136,6 +141,7 @@ def A2P_query(request):
                 studentimage = stu_user[0].last_name
 
             all_students = []
+            count = 0
             for x in students:
                 name = User.objects.filter(
                     username=x.student_name, is_active=True)
@@ -146,11 +152,13 @@ def A2P_query(request):
                     at_reg_status = att_reg[0].status
                 else:
                     at_reg_status = "Not Arrived"
+                count = count + 1
                 all_students.append(
                     [x.student_name, name[0].first_name, at_reg_status])
 
             return render(request, "A2P-portal-student.html", {
                 'all_students': all_students,
+                'count' : count,
                 'total_students': total_students,
                 'studentname': student.student_name,
                 'studentid': student.student_name,
