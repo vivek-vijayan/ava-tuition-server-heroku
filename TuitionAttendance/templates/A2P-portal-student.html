@@ -101,13 +101,12 @@
                         <div class="input-group mb-3">
                             <label class="input-group-text" for="student_name_selection">Student</label>
                             <select class="form-select" id="student_name_selection" name="student_name_selection">
-            
                                 {% for x in total_students %}
-                                {% if x.0 == studentname %}
-                                <option value="{{ x.0 }}" selected>{{ x.1 }}</option>
-                                {% else %}
-                                <option value="{{ x.0 }}">{{ x.1 }}</option>
-                                {% endif %}
+                                    {% if x.0 == studentname %}
+                                    <option value="{{ x.0 }}" selected>{{ x.1 }}</option>
+                                    {% else %}
+                                    <option value="{{ x.0 }}">{{ x.1 }}</option>
+                                    {% endif %}
                                 {% endfor %}
                             </select>
                         </div>

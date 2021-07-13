@@ -74,6 +74,7 @@ def A2P_query(request):
                 name = User.objects.filter(
                     username=x.student_name, is_active=True)
                 total_students.append([x.student_name, name[0].first_name])
+            print(total_students)
             return render(request, "A2P-portal-student.html", {
                 'total_students': total_students,
                 'studentname': student.student_name,
