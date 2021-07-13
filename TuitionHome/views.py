@@ -119,6 +119,7 @@ def AVA_Home(request):
                 'fees': "Fees ₹ " + str(student[0].fees),
                 'a2p_access': a2p_access,
                 'date_of_joining': student[0].date_of_joining,
+                'cbse_metric' : student[0].cbse_metric,
                 'is_leader': is_leader,
                 'leader_roles' : leader_roles,
                 'absent': absent,

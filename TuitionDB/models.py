@@ -12,6 +12,13 @@ class Student(models.Model):
     last_date = models.DateTimeField(null=True)
     is_active = models.BooleanField(default=True)
     fees = models.IntegerField(null=True)
+    school = models.CharField(null=True, max_length=500)
+    cbse_metric = models.CharField(null=True, max_length=500)
+    dob = models.DateField(null=True)
+    gender = models.CharField(null=True, max_length=200)
+    emergency_contact_person = models.CharField(null=True, max_length=500)
+    emergency_contact_number = models.CharField(null=True, max_length=500)
+    address = models.TextField(null=True)
 
     def __str__(self):
         return str(self.student_id) + " -> " + str(self.student_name)
