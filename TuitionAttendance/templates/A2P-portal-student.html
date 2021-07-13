@@ -200,6 +200,43 @@
             </div>
         </div>
     </div>
+    <div class="container" style="margin-top: 30px; color:darkgrey; margin-bottom: 30px;">
+        <div class="row">
+            <div class="col-sm-12">
+                <p class="h6">Check-In Registry </p>
+                <table class="table  table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody style="font-size: 13px">
+                        {% for y in all_students %}
+                        {% if y.2 != "Not Arrived" and y.2 != "Absent" %}
+                        <tr class="table-success">
+                            <th scope="row">{{y.0}}</th>
+                            <td>{{y.1}}</td>
+                            <td><span class="badge bg-success">{{y.2}}</span></td>
+    
+                        </tr>
+                        {% else %}
+                        <tr class="table-danger">
+                            <th scope="row">{{y.0}}</th>
+                            <td>{{y.1}}</td>
+                            <td><span class="badge bg-danger">{{y.2}}</span></td>
+    
+                        </tr>
+                        {% endif %}
+    
+                        {% endfor %}
+    
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
     <div class="container" style="margin-top: 20px;">
         <div class="row">
             <div class="col-sm-12">

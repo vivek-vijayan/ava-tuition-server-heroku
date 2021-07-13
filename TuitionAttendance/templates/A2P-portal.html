@@ -122,20 +122,20 @@
                             <th scope="col">Status</th>
                         </tr>
                     </thead>
-                    <tbody style="font-size: 12px">
+                    <tbody style="font-size: 13px">
                         {% for y in all_students %}
                             {% if y.2 != "Not Arrived" and y.2 != "Absent" %}
                             <tr class="table-success">
                                 <th scope="row">{{y.0}}</th>
                                 <td>{{y.1}}</td>
-                                <td>{{y.2}}</td>
-                                
+                                <td><span class="badge bg-success">{{y.2}}</span></td>
+                            
                             </tr>
                             {% else %}
                             <tr class="table-danger">
                                 <th scope="row">{{y.0}}</th>
                                 <td>{{y.1}}</td>
-                                <td>{{y.2}}</td>
+                                <td><span class="badge bg-danger">{{y.2}}</span></td>
                             
                             </tr>
                             {% endif %}
