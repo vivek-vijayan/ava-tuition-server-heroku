@@ -25,7 +25,15 @@ def A2P_homepage(request):
         for x in students:
             name = User.objects.filter(username=x.student_name, is_active=True)
             total_students.append([x.student_name, name[0].first_name])
-        return render(request, "A2P-portal.html", {'total_students': total_students, 'leader': request.user, 'expire_on': expire_on})
+        all_students = []
+        for x in students:
+            name = User.objects.filter(
+                username=x.student_name, is_active=True)
+            att_reg = Check_in_out_db_register.objects.filter(
+                attendance_date=datetime.date.today())
+            all_students.append(
+                [x.student_name, name[0].first_name, att_reg[0].status])
+        return render(request, "A2P-portal.html", {'all_students': all_students, 'total_students': total_students, 'leader': request.user, 'expire_on': expire_on})
     else:
         return redirect(A2P_logout)
 
@@ -73,9 +81,22 @@ def A2P_query(request):
             for x in students:
                 name = User.objects.filter(
                     username=x.student_name, is_active=True)
-                total_students.append([x.student_name, name[0].first_name])
+                att_reg = Check_in_out_db_register.objects.filter(
+                    student_name__username__contains=x.student_name, attendance_date=datetime.date.today())
+                total_students.append([x.student_name, name[0].first_name, att_reg[0].status])
+
+            all_students = []
+            for x in students:
+                name = User.objects.filter(
+                    username=x.student_name, is_active=True)
+                att_reg = Check_in_out_db_register.objects.filter(
+                    attendance_date=datetime.date.today())
+                all_students.append(
+                    [x.student_name, name[0].first_name, att_reg[0].status])
+
             print(total_students)
             return render(request, "A2P-portal-student.html", {
+                'all_students': all_students,
                 'total_students': total_students,
                 'studentname': student.student_name,
                 'studentid' : student.student_name,
@@ -100,7 +121,18 @@ def A2P_query(request):
             stu_user = User.objects.filter(username=queryStudent)
             if len(stu_user) > 0:
                 studentimage = stu_user[0].last_name
+            
+            all_students = []
+            for x in students:
+                name = User.objects.filter(
+                    username=x.student_name, is_active=True)
+                att_reg = Check_in_out_db_register.objects.filter(
+                    attendance_date=datetime.date.today())
+                all_students.append(
+                    [x.student_name, name[0].first_name, att_reg[0].status])
+
             return render(request, "A2P-portal-student.html", {
+                'all_students': all_students,
                 'total_students': total_students,
                 'studentname': student.student_name,
                 'studentid': student.student_name,
@@ -111,7 +143,6 @@ def A2P_query(request):
                 })
     else:
         return redirect(A2P_logout)
-
 
 @login_required(login_url=A2P_login)
 def A2P_checkin(request):
