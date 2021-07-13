@@ -52,7 +52,7 @@ def AVA_change_password(request):
 
 
 def AVA_logginer(request):
-    username = request.POST['username']
+    username = str(request.POST['username']).lower()
     password = request.POST['password']
     user = authenticate(username=username, password=password)
     if user:
