@@ -71,28 +71,49 @@ def AVA_Home(request):
         a2p_access = True
         fullname = str(request.user.first_name)
         return render(request, "AVA-home.html", {
+            'position': 'administrator',
             'username': request.user,
             'fullname': fullname,
             'firstname': request.user.first_name,
             'fees': "Administrator",
-            'a2p_access' : a2p_access,
-            'show_stat' : False,
+            'a2p_access': a2p_access,
+            'show_stat': False,
             'is_leader': True,
-            'logo' : request.user.last_name,
-            'leader_roles': "Administrator",
+            'logo': request.user.last_name,
+            'leader_roles': 'Administrator',
         })
+
     elif request.user.is_active:
+        leader = Leader.objects.filter(
+            leader_name=request.user, valid_till__gte=datetime.datetime.now())
+        if len(leader) > 0:
+            if leader[0].leader_roles == "Teacher":
+                # Static role file
+                a2p_access = True
+                fullname = str(request.user.first_name)
+                return render(request, "AVA-home.html", {
+                    'position': 'teacher',
+                    'username': request.user,
+                    'fullname': fullname,
+                    'firstname': request.user.first_name,
+                    'fees': "Teacher",
+                    'a2p_access': a2p_access,
+                    'show_stat': False,
+                    'is_leader': True,
+                    'logo': request.user.last_name,
+                    'leader_roles': leader[0].leader_roles,
+                })
         # A2Presence access check
         a2p = A2Presence_access.objects.filter(
             leader=request.user, valid_till__gte=datetime.datetime.now())
-        a2p_access = True if len(a2p) > 0 else False 
+        a2p_access = True if len(a2p) > 0 else False
         entry = Check_in_out_db_register.objects.filter(
-            student_name=request.user, attendance_date=datetime.date.today(), raised_absent = True)
+            student_name=request.user, attendance_date=datetime.date.today(), raised_absent=True)
         absent = True if len(entry) > 0 else False
         entry = Check_in_out_db_register.objects.filter(
             student_name=request.user, attendance_date=datetime.date.today())
         status = entry[0].status if len(entry) > 0 else "Not Arrived"
-        if len(entry)  > 0:
+        if len(entry) > 0:
             check_in_time = entry[0].in_time
             check_out_time = entry[0].out_time
             day_off = entry[0].day_off
@@ -100,36 +121,38 @@ def AVA_Home(request):
             check_in_time = None
             check_out_time = None
             day_off = False
-        student = Student.objects.filter(student_name=request.user, is_active=True)
+        student = Student.objects.filter(
+            student_name=request.user, is_active=True)
         leader = Leader.objects.filter(
             leader_name=request.user, valid_till__gte=datetime.datetime.now())
         if len(leader) > 0:
             is_leader = True
             leader_roles = leader[0].leader_roles
         else:
-            is_leader =False
+            is_leader = False
             leader_roles = ""
-        
+
         if len(student) > 0:
-            fullname = str(request.user.first_name) 
+            fullname = str(request.user.first_name)
             return render(request, "AVA-home.html", {
+                'position': 'student',
                 'username': request.user,
                 'fullname': fullname,
                 'firstname': request.user.first_name,
                 'fees': "Fees ₹ " + str(student[0].fees),
                 'a2p_access': a2p_access,
                 'date_of_joining': student[0].date_of_joining,
-                'cbse_metric' : student[0].cbse_metric,
+                'cbse_metric': student[0].cbse_metric,
                 'is_leader': is_leader,
-                'leader_roles' : leader_roles,
+                'leader_roles': leader_roles,
                 'absent': absent,
-                'show_stat' : True,
+                'show_stat': True,
                 'status': status,
-                'day_off' :day_off,
-                'check_in_time' : check_in_time,
+                'day_off': day_off,
+                'check_in_time': check_in_time,
                 'check_out_time': check_out_time,
                 'logo': request.user.last_name,
-                'class':student[0].student_class
+                'class': student[0].student_class
             })
         else:
             return render(request, "AVA-Error.html", {'username': request.user, 'message': "Your account has been locked"})
