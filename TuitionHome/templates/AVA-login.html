@@ -104,9 +104,16 @@
                             </div>
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="basic-addon1">P</span>
-                                <input type="password" name="password" class="form-control" placeholder="Password" aria-label="Password"
+                                <input type="password" id="myInput" name="password" class="form-control" placeholder="Password" aria-label="Password"
                                     aria-describedby="basic-addon1">
                             </div>
+                            
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" onclick="myFunction()" type="checkbox" id="flexSwitchCheckChecked">
+                                <label class="form-check-label" for="flexSwitchCheckChecked">Show password</label>
+                            </div>
+                            <br>
+                            <hr>
                     </div>
                     {% if iserror == True %}
                     <div class="alert alert-danger" role="alert">
@@ -114,7 +121,7 @@
                     </div>
                     {% endif %}
                     <div class="col-sm-12">
-                        <small style="color:grey">Login to continue</small>
+                        <small style="color:grey">Login to enter the AVA Tuition portal</small>
                     </div>
                 </div>
                 <div class="row" style="padding-top: 20px;">
@@ -128,5 +135,14 @@
     </div>
     
 </body>
-
+<script>
+    function myFunction() {
+            var x = document.getElementById("myInput");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+</script>
 </html>
