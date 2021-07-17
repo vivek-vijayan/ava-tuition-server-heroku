@@ -89,79 +89,52 @@
             </div>
             
         </div>
-    </div>
-    <div class="container" style="margin-top: 30px; color:darkgrey; margin-bottom: 30px;">
+        {% if is_reg == True %}
         <div class="row">
+            <hr>
+            <p class="display-6" style="color:orange">Entry point</p>
+            <form action="register" method="post">
+                {% csrf_token %}
             <div class="col-sm-12">
-                <p class="h6">Today's report</p>
-                <table class="table  table-bordered">
-                    <thead>
-                        <tr>
-                            <th scope="col">#{{count}}</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Option</th>
-                            
-                        </tr>
-                    </thead>
-                    <tbody style="font-size: 13px">
-                        {% for y in total_students %}
-                            {% if y.2 != "Not Studied" %}
-                            <tr class="table-success">
-                                <th scope="row">{{y.0}}</th>
-                                <td>{{y.1}}</td>
-                                <td><span class="badge bg-success">{{y.2}}</span></td>
-                                <td><button class="btn btn-success btn-sm">View</button></td>
-                            </tr>
-                            {% else %}
-                            <tr class="table-danger">
-                                <th scope="row">{{y.0}}</th>
-                                <td>{{y.1}}</td>
-                                <td><span class="badge bg-danger">{{y.2}}</span></td>
-                                <td><button class="btn btn-danger btn-sm">View</button></td>
-                            </tr>
-                            {% endif %}
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    {% if role != "Student" %}
-    <div class="container" style="margin-top: 20px;">
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="card border-success mb-3" style="max-width: 78rem;">
-                    <div class="card-header ">
-                        <ion-icon name="ticket-outline"></ion-icon> A2C Access Token
-                    </div>
-                    <div class="card-body text-success" style="text-align: center;">
-                        <h5 class="card-title text-dark">
-                            <ion-icon name="person-circle-outline" style="font-size:30px"></ion-icon> <br> {{leader}}
-                        </h5>
-                        <div class="text-success">
-                            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:">
-                                <use xlink:href="#info-fill" />
-                            </svg>
-                            <span style="font-size: 12px;">Expiry date : {{expire_on}}</span>
-                        </div>
-                        <div style="padding-top: 20px;">
-                            <div class="d-grid gap-2 d-md-block">
-                                <form action="logout">
-                                    {% csrf_token %}
-                                    <button type="submit" class="btn btn-danger">Logout</button>
-                                </form>
-                                
-                            </div>
-                            
-                            
-                        </div>
-                    </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" style="color:grey" class="form-label">Subject</label>
+                    <select class="form-select" name="subject" aria-label="Default select example">
+                        <option selected value = "Mathematics">Mathematics</option>
+                        <option value="Social Science">Social Science</option>
+                        <option value="Science">Science</option>
+                        <option value="Tamil">Tamil</option>
+                        <option value="Computer Science">Computer Science</option>
+                        <option value="English">English</option>
+                        <option value="Hindi">Hindi</option>
+                        <option value="Other">Any other..</option>
+                    </select>
                 </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlTextarea1" style="color:grey" class="form-label">Additional Description</label>
+                    <textarea class="form-control" name="desc" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    
+                </div>
+                <input type="hidden" name="username" value = {{student}}>
+                <button type="submit" class="btn btn-dark">Started Studying Now</button>
+                </form>
             </div>
         </div>
+                <br>
+                <small> <b>Information</b>: Current time wil be recorded in the server</small>
+        {% else %}
+        <div class="row">
+            <hr>
+            <p class="display-6" style="color:orange">Entry point</p>
+            <div class="alert alert-success" role="alert">
+                Today's study time has been already registered at {{sr_time}}
+            </div>
+        </div>
+        </div>
+        {% endif%}
+
     </div>
-    {% endif %}
+ 
+    
 <div style="margin-bottom: 100px;">
 </div>
 </body>

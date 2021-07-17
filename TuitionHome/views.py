@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from TuitionDB.models import A2Presence_access, Student, Leader
+from TuitionDB.models import A2Presence_access, Student, Leader, A2Study_access
 from TuitionAttendance.models import Check_in_out_db_register
 from django.contrib.auth.models import User
 # Create your views here.
@@ -77,6 +77,7 @@ def AVA_Home(request):
             'firstname': request.user.first_name,
             'fees': "Administrator",
             'a2p_access': a2p_access,
+            'a2s_access' : True,
             'show_stat': False,
             'is_leader': True,
             'logo': request.user.last_name,
@@ -89,7 +90,16 @@ def AVA_Home(request):
         if len(leader) > 0:
             if leader[0].leader_roles == "Teacher":
                 # Static role file
-                a2p_access = True
+                # A2Presence access check
+                a2p = A2Presence_access.objects.filter(
+                    leader=request.user, valid_till__gte=datetime.datetime.now())
+                a2p_access = True if len(a2p) > 0 else False
+
+                # A2Study access check
+                a2s = A2Study_access.objects.filter(
+                    leader=request.user, valid_till__gte=datetime.datetime.now())
+                a2s_access = True if len(a2s) > 0 else False
+
                 fullname = str(request.user.first_name)
                 return render(request, "AVA-home.html", {
                     'position': 'teacher',
@@ -98,6 +108,7 @@ def AVA_Home(request):
                     'firstname': request.user.first_name,
                     'fees': "Teacher",
                     'a2p_access': a2p_access,
+                    'a2s_access': a2s_access,
                     'show_stat': False,
                     'is_leader': True,
                     'logo': request.user.last_name,
@@ -107,6 +118,13 @@ def AVA_Home(request):
         a2p = A2Presence_access.objects.filter(
             leader=request.user, valid_till__gte=datetime.datetime.now())
         a2p_access = True if len(a2p) > 0 else False
+
+        # A2Study access check
+        a2s = A2Study_access.objects.filter(
+            leader=request.user, valid_till__gte=datetime.datetime.now())
+        a2s_access = True if len(a2s) > 0 else False
+
+
         entry = Check_in_out_db_register.objects.filter(
             student_name=request.user, attendance_date=datetime.date.today(), raised_absent=True)
         absent = True if len(entry) > 0 else False
@@ -141,6 +159,7 @@ def AVA_Home(request):
                 'firstname': request.user.first_name,
                 'fees': "Fees ₹ " + str(student[0].fees),
                 'a2p_access': a2p_access,
+                'a2s_access':a2s_access,
                 'date_of_joining': student[0].date_of_joining,
                 'cbse_metric': student[0].cbse_metric,
                 'is_leader': is_leader,

@@ -11,3 +11,5 @@ class StudyRegister(models.Model):
     study_time = models.DateTimeField(auto_now=True)
     status = models.CharField(blank=True, max_length=200)
 
+    def __str__(self):
+        return str(self.student) + " -> " + str(self.study_date) + "  -> " + str(self.status)
