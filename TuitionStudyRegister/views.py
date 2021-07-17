@@ -118,7 +118,7 @@ def A2S_Approved(request):
     sr = StudyRegister.objects.filter(
         student__username__contains=studentname, study_date=datetime.datetime.now()).update(approved_by_trainer=True, declined_by_trainer=False, actioned_by = leadername)
     
-    return render(request, "AVA-message-display.html", {'username': request.user, 'message': "Study time has been approved by " + str(leadername)})
+    return render(request, "AVAmessage-display.html", {'username': request.user, 'message': "Study time has been approved by " + str(leadername)})
 
 
 @login_required(login_url=A2S_login)
@@ -128,4 +128,4 @@ def A2S_Declined(request):
     sr = StudyRegister.objects.filter(
         student__username__contains=studentname, study_date=datetime.datetime.now()).update(approved_by_trainer=False, declined_by_trainer=True, actioned_by=leadername)
 
-    return render(request, "AVA-message-display.html", {'username': request.user, 'message': "Study time has been rejected by " + str(leadername)})
+    return render(request, "AVAmessage-display.html", {'username': request.user, 'message': "Study time has been rejected by " + str(leadername)})
