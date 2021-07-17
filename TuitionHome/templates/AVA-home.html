@@ -378,40 +378,39 @@
             <div class="card-heading p-4 mt-3">
                 <div class="first">
                     <h6 class="headings">
-                        <ion-icon name="home"></ion-icon> Portal Home
+                        <img src="{% static 'home.svg'%}" width="15px" alt="" srcset=""> Portal Home
                     </h6>
                     <div class="time d-flex flex-row align-items-center justify-content-between mt-3">
                         <div class="d-flex align-items-center"> <i class="fa fa-clock-o clock"></i> <span
                                 class="hour ml-1"></span> </div>
                         <div>
                             {% if show_stat == True %}
-                            
+
                             <span class="badge bg-success">{{fees}}</span>
-                            
+
                             {% endif%}
 
                         </div>
                     </div>
                 </div>
                 <div class="second d-flex flex-row mt-2">
-                    <div class="image mr-3"> <img src="{{logo}}" class="rounded-circle"
-                            width="60" />
+                    <div class="image mr-3"> <img src="{{logo}}" class="rounded-circle" width="60" />
                     </div>
                     <div class="" style="padding-left: 20px;">
-                        <div class="d-flex flex-row mb-1"> <span> {{ fullname }}</span> 
+                        <div class="d-flex flex-row mb-1"> <span> {{ fullname }}</span>
                         </div>
                         <div>
                             <p>
                                 {% if show_stat == True %}
                                 <small>
                                     <ion-icon name="calendar-outline"></ion-icon> {{date_of_joining}}
-                                    
+
                                     <br>
                                 </small>
-                                    <span class="badge rounded-pill bg-secondary text-light">Class {{class}}</span>
-                                    <span class="badge rounded-pill text-secondary">{{cbse_metric}}</span>
-                                
-                               
+                                <span class="badge rounded-pill bg-secondary text-light">Class {{class}}</span>
+                                <span class="badge rounded-pill text-secondary">{{cbse_metric}}</span>
+
+
                                 {% endif%}
                             </p>
                             {% if is_leader == True %}
@@ -429,7 +428,7 @@
 
                 {% if show_stat == True %}
                 <p>
-                    <ion-icon name="stats-chart"></ion-icon> Status
+                    <img src="{% static 'stat.svg'%}" width="15px" alt="" srcset=""> Status
                 </p>
                 <div class="col-sm-3">
                     <div class="col-sm-12">
@@ -447,14 +446,18 @@
                 <p class="card-text">
                 <div class="alert alert-success d-flex align-items-center text-success" role="alert">
                     <div style="font-size: small;">
-                        
-                            <b><ion-icon name="log-in"></ion-icon> In-time: </b> {{check_in_time}}
 
-                            {% if day_off == True %}
-                            <br>
-                            <b><ion-icon name="log-out"></ion-icon> Out-time: </b> {{check_out_time}}
-                            {% endif %}
-                        
+                        <b>
+                            <ion-icon name="log-in"></ion-icon> In-time:
+                        </b> {{check_in_time}}
+
+                        {% if day_off == True %}
+                        <br>
+                        <b>
+                            <ion-icon name="log-out"></ion-icon> Out-time:
+                        </b> {{check_out_time}}
+                        {% endif %}
+
                     </div>
                 </div>
                 </p>
@@ -465,56 +468,85 @@
 
 
                 <div class="third mt-4">
-                    {% if status == "Not Arrived"  %}
+                    {% if status == "Not Arrived" %}
                     <button type="submit" onclick="window.location.href ='self-absent-raise'"
                         class="btn btn-success btn-sm text-light">Absent Request</button>
-                        
+
                     {% endif %}
                     {% if show_stat == True %}
-                        <hr>
+                    <hr>
                     {% endif %}
 
                     {% if leader_roles == "Administrator" %}
-                        <p>
-                            <ion-icon name="flash"></ion-icon> Admin settings
-                        </p>
-                        <button onclick="window.location.href='/admin'" class="btn btn-danger btn-sm text-light">Admin site</button>
-                        
-                        <hr>
+                    <p>
+                        <ion-icon name="flash"></ion-icon> Admin settings
+                    </p>
+                    <button onclick="window.location.href='/admin'" class="btn btn-danger btn-sm text-light">Admin
+                        site</button>
+
+                    <hr>
                     {% endif %}
                     <p>
-                        <ion-icon name="options"></ion-icon> Profile settings</p>
-                    <button onclick="window.location.href='password-change'" class="btn btn-dark btn-sm text-light">Change Password</button>
-                    <button type="submit" onclick="window.location.href ='logout'" class="btn btn-danger btn-sm">Logout</button>
+                        <img src="{% static 'options.svg'%}" width="15px" alt="" srcset=""> Profile settings
+                    </p>
+                    <button onclick="window.location.href='password-change'"
+                        class="btn btn-dark btn-sm text-light">Change Password</button>
+                    <button type="submit" onclick="window.location.href ='logout'"
+                        class="btn btn-danger btn-sm">Logout</button>
                 </div>
             </div>
         </div>
     </div>
 
-    {% if status != "Absent" %}
+    {% if show_stat == True %}
+
     <div class="container" style="margin-top: 30px;">
         <div class="row">
             <div style="padding-left: 30px;">
+            <h6>
+                <img src="{% static 'link.svg'%}" width="15px" alt="" srcset=""> Global Apps
+            </h6>
+            </div>
+            <div class="col-sm-6" style="margin-top: 20px;">
+                <div class="d-grid gap-1 d-md-block">
+                    <button class="btn btn-warning" onclick="window.location.href = 'a2study/stud-home'" style="height:100px; width:100%; padding-top: 15px;">
+                        <p class="display-6">
+                            <img src="{% static 'book.svg'%}" width="40px" alt="" srcset="">
+                            <small style="color: black;">
+                                Study Register
+                            </small> 
+                        </p>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if status != "Absent" %}
+    <div class="container" style="margin-top: 30px;">
+        <div class="row">
+
+
+            {% if is_leader == True %}
+            <div style="padding-left: 30px;">
                 <h6>
-                    <ion-icon name="link"></ion-icon> Quick Links
+                    <img src="{% static 'link.svg'%}" width="15px" alt="" srcset=""> Quick Links
                 </h6>
                 <p><small>Select the below card to open the respective portal. </small></p>
 
             </div>
-            
-            {% if is_leader == True %}
-
 
             <!-- A2Presence portal-->
             {% if a2p_access == True %}
             <div class="col-sm-6">
                 <div class="card text-white bg-success mb-3" style="max-width: 78rem;">
-                    <div class="card-header">
+                    <div class="card-header" style="">
                         <ion-icon name="ticket-outline"></ion-icon> A2Presence
                     </div>
                     <div class="card-body">
                         <h2 style="font-size: 60px;">
-                            <ion-icon name="swap-horizontal-outline"></ion-icon>
+                            <img src="{% static 'arrow.svg'%}" width="50px" alt="" srcset="">
                         </h2>
                         <b>Admin Portal</b>
                         <p> <small class="text-light"> Check-in Check-out entry portal. Only Leaders have access to this
@@ -526,29 +558,53 @@
             </div>
             {% endif %}
 
+            <!-- A2Study portal-->
+            {% if a2s_access == True %}
+            <div class="col-sm-6">
+                <div class="card text-dark bg-warning mb-3" style="max-width: 78rem;">
+                    <div class="card-header">
+                        <ion-icon name="ticket-outline"></ion-icon> A2Study
+                    </div>
+                    <div class="card-body">
+                        <h2 style="font-size: 60px;">
+                            <img src="{% static 'book.svg'%}" width="50px" alt="" srcset="">
+                        </h2>
+                        <b>Admin Portal</b>
+                        <p> <small class="text-dark"> Student Study Register, Admin and teacher can check the portal and
+                                get the details information on the study entry made from the students profile on a daily
+                                basis</small></p>
+                    </div>
+                    <button class="btn btn-dark" onclick="window.location.href = 'a2study/home';" type="button">Go to
+                        portal</button>
+                </div>
+            </div>
+            {% endif %}
+
             {% endif %}
 
 
         </div>
     </div>
     {% else %}
-     
+
     <div class="container">
         <div style="padding-left: 20px;">
             <h6>
                 <ion-icon name="link"></ion-icon> Quick Links
             </h6>
             <p><small>Select the below card to open the respective portal. </small></p>
-        
+
         </div>
         <div class="container">
-            
+
             <center>
 
-                <h1 style="color: rgb(77, 77, 77);"><ion-icon name="lock-closed"></ion-icon></h1> 
+                <h1 style="color: rgb(77, 77, 77);">
+                    <ion-icon name="lock-closed"></ion-icon>
+                </h1>
                 <p><small>
-                    Leader Quick links are locked as you are on leave. will be activated once you check-in tomorrow
-                </small></p>
+                        Leader Quick links are locked as you are on leave. will be activated once you check-in tomorrow
+                    </small></p>
             </center>
         </div>
     </div>

@@ -26,6 +26,7 @@ class Student(models.Model):
 class Leader(models.Model):
     position = (
         ('Administrator', 'Administrator'),
+        ('Teacher', 'Teacher'),
         ('Check-in Leader', 'Check-in Leader'),
         ('File Leader', 'File Leader'),
         ('Diary Leader', 'Diary Leader')
@@ -56,6 +57,18 @@ class A2Complaint_access(models.Model):
     a2c_access_id = models.AutoField(primary_key=True)
     leader = models.ForeignKey(User, on_delete=models.CASCADE)
     a2c_access = models.BooleanField(default=False)
+    valid_from = models.DateTimeField(auto_now=True)
+    valid_till = models.DateTimeField(null=True)
+    description = models.CharField(default="bg-danger", max_length=200)
+
+    def __str__(self):
+        return str(self.leader) + " - valid till : " + str(self.valid_till)
+
+
+class A2Study_access(models.Model):
+    a2s_access_id = models.AutoField(primary_key=True)
+    leader = models.ForeignKey(User, on_delete=models.CASCADE)
+    a2s_access = models.BooleanField(default=False)
     valid_from = models.DateTimeField(auto_now=True)
     valid_till = models.DateTimeField(null=True)
     description = models.CharField(default="bg-danger", max_length=200)
