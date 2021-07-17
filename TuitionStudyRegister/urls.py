@@ -16,12 +16,16 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from .views import A2S_Home, A2S_logout, A2S_Student_Home, A2S_Study_Register
+from .views import A2S_Home, A2S_logout, A2S_Student_Home, A2S_Study_Register, A2S_Detail, A2S_Approved, A2S_Declined
 
 
 urlpatterns = [
     path('home', A2S_Home, name="A2S_Home"),
     path('logout', A2S_logout, name="A2S_logout"),
     path('stud-home', A2S_Student_Home, name="A2S_Student_Home"),
-    path('register', A2S_Study_Register, name="A2S_Study_Register")
+    path('register', A2S_Study_Register, name="A2S_Study_Register"),
+    path('show-detail', A2S_Detail, name="A2S_Detail"),
+    path('approved', A2S_Approved, name="A2S_Approved"),
+    path('declined', A2S_Declined, name="A2S_Declined"),
+    
 ]

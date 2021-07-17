@@ -71,7 +71,7 @@
     <nav class="navbar navbar-light bg-warning">
         <div class="container-fluid">
             <a class="navbar-brand display-5" href="#" style="font-weight: 300;">
-                <ion-icon name="book"></ion-icon>
+                <img src="{% static 'book.svg'%}" width="15px" alt="" srcset="">
                 A2Study
             </a>
         </div>
@@ -83,8 +83,12 @@
                 <p class="h5">Student Study Portal </p><span class="badge bg-danger">{{role}}</span><br>
                 <p><small>Tuition students should register their study timing here. Make sure to register on time, Study time will be the
                 considered on the time you punch your record here.</small></p>
+                        
                         <a href="/home">
-                            <button type="submit" class="btn btn-light"><ion-icon name="home"></ion-icon> Go to Home</button></a>
+                            <button type="submit" class="btn btn-light">
+                                <ion-icon name="home"></ion-icon> Go to Home
+                            </button>
+                        </a>
             </div>
             
         </div>
@@ -96,28 +100,43 @@
                 <table class="table  table-bordered">
                     <thead>
                         <tr>
-                            <th scope="col">#{{count}}</th>
                             <th scope="col">Name</th>
                             <th scope="col">Status</th>
                             <th scope="col">Option</th>
-                            
                         </tr>
                     </thead>
                     <tbody style="font-size: 13px">
                         {% for y in total_students %}
                             {% if y.2 != "Not Studied" %}
-                            <tr class="table-success">
-                                <th scope="row">{{y.0}}</th>
-                                <td>{{y.1}}</td>
-                                <td><span class="badge bg-success">{{y.2}}</span></td>
-                                <td><button class="btn btn-success btn-sm">View</button></td>
+                            <tr >
+                                <form action="show-detail" method="post">
+                                    {% csrf_token %}
+                                    <td>{{y.1}}</td>
+                                    <td><span class="badge bg-success">{{y.2}}</span>
+                                    {% if y.3 == True %}
+                                        <span class="badge bg-success">Approved</span>
+                                    {% endif %}
+
+                                    {% if y.4 == True %}
+                                    <span class="badge bg-danger">Declined</span>
+                                    {% endif %}
+
+                                    {% if y.3 == False and y.4 == False %}
+                                    <span class="badge bg-warning">Waiting</span>
+                                    {% endif %}
+                                
+                                    </td>                   
+                                    <input type="hidden" name="username" value="{{y.0}}">
+                                    <td><button type="submit" class="btn btn-sm btn-success btn-sm">View</button></td>
+                                </form>
                             </tr>
                             {% else %}
-                            <tr class="table-danger">
-                                <th scope="row">{{y.0}}</th>
+                            <tr >
                                 <td>{{y.1}}</td>
                                 <td><span class="badge bg-danger">{{y.2}}</span></td>
-                                <td><button class="btn btn-danger btn-sm">View</button></td>
+                                <td>
+                                    
+                                </td>
                             </tr>
                             {% endif %}
                         {% endfor %}
@@ -132,7 +151,7 @@
             <div class="col-sm-6">
                 <div class="card border-success mb-3" style="max-width: 78rem;">
                     <div class="card-header ">
-                        <ion-icon name="ticket-outline"></ion-icon> A2C Access Token
+                        <ion-icon name="ticket-outline"></ion-icon> A2S Access Token
                     </div>
                     <div class="card-body text-success" style="text-align: center;">
                         <h5 class="card-title text-dark">
