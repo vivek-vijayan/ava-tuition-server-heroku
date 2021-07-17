@@ -1,3 +1,4 @@
+from django.http.response import HttpResponse
 from django.shortcuts import render
 # Create your views here.
 from django.shortcuts import render, redirect
@@ -21,6 +22,26 @@ def A2S_logout(request):
 
 
 @login_required(login_url=A2S_login)
+def A2S_Detail(request):
+    username = request.POST['username']
+    study_reg = StudyRegister.objects.filter(student__username__contains = username, study_date=datetime.date.today())
+    user = User.objects.filter(
+        username = study_reg[0].student,
+    )
+    return render(request, "A2S-student-portal-detail.html", {
+        'studentname' : user[0].username,
+        'studytime' : study_reg[0].study_time,
+        'studydate' : study_reg[0].study_date,
+        'subject' : study_reg[0].subject,
+        'desc' : study_reg[0].description,
+        'studentimage' : user[0].last_name,
+        'leadername' : request.user,
+        'approved' : study_reg[0].approved_by_trainer,
+        'declined': study_reg[0].declined_by_trainer,
+        'by' : study_reg[0].actioned_by
+    })
+
+@login_required(login_url=A2S_login)
 def A2S_Home(request):
     students = Student.objects.filter(is_active=True, last_date__gte=datetime.datetime.now())
     total_students = []
@@ -28,12 +49,16 @@ def A2S_Home(request):
     for x in students:
         name = User.objects.filter(username=x.student_name, is_active=True)
         study_reg = StudyRegister.objects.filter(
-            student=x.student_name, study_date=datetime.date.today())
+            student__username__contains=x.student_name, study_date=datetime.date.today())
+        approved = declined = None
         if len(study_reg) > 0:
             temp = study_reg[0].status
+            approved = study_reg[0].approved_by_trainer
+            declined = study_reg[0].declined_by_trainer
         else:
             temp = "Not Studied"
-        total_students.append([x.student_name, name[0].first_name, temp])
+
+        total_students.append([x.student_name, name[0].first_name, temp, approved, declined])
 
     if request.user.is_superuser:
         leader_check = A2Study_access.objects.filter(leader = request.user, valid_till__gte = datetime.datetime.now())
@@ -75,9 +100,32 @@ def A2S_Student_Home(request):
     
     if len(student) > 0:
         if len(sr) > 0:
-            return render(request, "A2S-student-home.html", {'role': 'Student', 'student': request.user, 'is_reg' : False, 'sr_time': sr[0].study_time})
+            return render(request, "A2S-student-home.html", {'role': 'Student', 'student': request.user, 'is_reg': False, 
+            'sr_time': sr[0].study_time, 'approved': sr[0].approved_by_trainer,
+            'declined' : sr[0].declined_by_trainer, 'by' : sr[0].actioned_by
+            })
         else:
-            return render(request, "A2S-student-home.html", {'role': 'Student', 'student': request.user, 'is_reg': True})
+            return render(request, "AVA-Error2.html", {'username': request.user, 'message': "Your account has been blocked"})
 
     else:
         return render(request, "AVA-Error2.html", {'username': request.user, 'message': "Access to this portal has been blocked"})
+
+
+@login_required(login_url=A2S_login)
+def A2S_Approved(request):
+    leadername = request.POST['leadername']
+    studentname = request.POST['studentname']
+    sr = StudyRegister.objects.filter(
+        student__username__contains=studentname, study_date=datetime.datetime.now()).update(approved_by_trainer=True, declined_by_trainer=False, actioned_by = leadername)
+    
+    return render(request, "AVA-message-display.html", {'username': request.user, 'message': "Study time has been approved by " + str(leadername)})
+
+
+@login_required(login_url=A2S_login)
+def A2S_Declined(request):
+    leadername = request.POST['leadername']
+    studentname = request.POST['studentname']
+    sr = StudyRegister.objects.filter(
+        student__username__contains=studentname, study_date=datetime.datetime.now()).update(approved_by_trainer=False, declined_by_trainer=True, actioned_by=leadername)
+
+    return render(request, "AVA-message-display.html", {'username': request.user, 'message': "Study time has been rejected by " + str(leadername)})
