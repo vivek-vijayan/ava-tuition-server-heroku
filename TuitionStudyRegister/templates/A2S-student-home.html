@@ -130,7 +130,7 @@
         </div>
         </div>
         {% endif%}
-
+{% if is_reg != True %}
         {% if approved == False and declined == False %}
         <div class="alert alert-warning" role="alert">
             Waiting for approval from trainer
@@ -145,7 +145,7 @@
             Rejected by {{ by }}
         </div>
         {% endif %}
-
+{% endif %}
     </div>
  
     
