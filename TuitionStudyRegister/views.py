@@ -105,7 +105,9 @@ def A2S_Student_Home(request):
             'declined' : sr[0].declined_by_trainer, 'by' : sr[0].actioned_by
             })
         else:
-            return render(request, "AVA-Error2.html", {'username': request.user, 'message': "Your account has been blocked"})
+            return render(request, "A2S-student-home.html", {'role': 'Student', 'student': request.user, 'is_reg': True,
+                                                            
+                                                             })
 
     else:
         return render(request, "AVA-Error2.html", {'username': request.user, 'message': "Access to this portal has been blocked"})
