@@ -1,2 +1,6 @@
 # ava-tuition-server-heroku
-ava-tuition-server-heroku Active Repository
+AVA Group Tuition Server - Active Repository
+
+🔥 Python Repository
+
+_ Developer:  Vivek Vijayan
