@@ -523,6 +523,22 @@
             </div>
 
 
+            <!-- A2Examination -->
+            <div class="col-sm-6" style="margin-top: 20px;">
+                <div class="d-grid gap-1 d-md-block">
+                    <button class="btn btn-info" onclick="window.location.href = 'exam-score'"
+                        style="height:200px; width:100%; padding-top: 15px;">
+                        <p class="display-6">
+                            <img src="{% static 'stat.svg'%}" width="40px" alt="" srcset="">
+                            <small style="color: black;">
+                                Exam results
+                            </small>
+                        </p>
+                    </button>
+                </div>
+            </div>
+
+
         </div>
     </div>
     {% endif %}
@@ -613,8 +629,43 @@
         </div>
     </div>
     {% endif %}
-    <div style="margin-bottom: 100px;">
+
+    {% if show_result == True %}
+    <div style="padding-left: 30px;">
+        <h6>
+            <img src="{% static 'stat.svg'%}" width="15px" alt="" srcset="">  Examination Result
+        </h6>
     </div>
+    <center>
+        <p class="h4">{{exam_title}}</p>
+    </center>
+    <div class="container">
+        <div class="row">
+            <table class="table" style="padding: 20px">
+                <thead>
+                    <tr>
+                        <th scope="col">Subject</th>
+                        <th scope="col">Mark</th>
+                        <th scope="col">Result</th>
+            
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    {% endif %}
+        <div style="margin-bottom: 100px;">
+        </div>
+
 </body>
 
 </html>

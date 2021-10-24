@@ -75,3 +75,4 @@ class A2Study_access(models.Model):
 
     def __str__(self):
         return str(self.leader) + " - valid till : " + str(self.valid_till)
+
