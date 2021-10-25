@@ -369,11 +369,12 @@
             <div class="row">
                 <div class="col-sm-6">
                     <h2 class="display-6 text-light" style="padding-top: 20px;">
-                        Welcome {{firstname}}!
+                        {{exam_title}}
                     </h2>
                 </div>
             </div>
         </div>
+        {% for x in exam %}
         <div class="container d-flex justify-content-center">
             <div class="card-heading p-4 mt-3">
                 <div class="first">
@@ -394,16 +395,16 @@
                     </div>
                 </div>
                 <div class="second d-flex flex-row mt-2">
-                    <div class="image mr-3"> <img src="{{logo}}" class="rounded-circle" width="60" />
+                    <div class="image mr-3"> <img src="{{ x.student.last_name }}" class="rounded-circle" width="60" />
                     </div>
                     <div class="" style="padding-left: 20px;">
                         <div class="d-flex flex-row mb-1">
-                            <span style="font-size: 20px;"> {{ fullname }} </span>
+                            <span style="font-size: 20px;"> {{ x.student.first_name }} </span>
 
                         </div>
                         <div>
                             <p>
-                                <span class="badge rounded-pill bg-secondary text-light">Class {{class}}</span>
+                                <span class="badge rounded-pill bg-secondary text-light">Student</span>
                                 <span class="badge rounded-pill text-secondary">{{cbse_metric}}</span>
                             </p>
                             {% if is_leader == True %}
@@ -419,8 +420,7 @@
 
                     <button onclick="window.location.href='/'" class="btn btn-dark btn-sm text-light">Back to
                         home</button>
-                    <button type="submit" onclick="window.location.href ='logout'"
-                        class="btn btn-danger btn-sm">Logout</button>
+                    
                 </div>
 
                 <hr class="line-color">
@@ -429,15 +429,12 @@
                         <p class="h4">{{exam_title}}</p>
                     </center>
                 </div>
-                <div class="alert alert-secondary" role="alert">
-                    Total : {{total_mark}} / {{max_mark}}
-                    <br>
-                    Percentage : <b>{{percent}} %</b>
+                <div class="alert alert-warning" role="alert">
+                    Total : {{x.total_mark}} / {{x.max_mark}}
+                    
                 </div>
                 {% if show_result == True %}
-
                 <br>
-                
                 <div class="container">
                     <div class="row">
                         <table class="table" style="padding: 20px">
@@ -450,11 +447,11 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {% if show_english == True %}
+                                {% if x.is_english == True %}
                                 <tr>
                                     <th scope="row">ENGLISH</th>
-                                    <td>{{english_mark}} / 100</td>
-                                    {% if english_mark > 40 %}
+                                    <td>{{x.english_mark}} / 100</td>
+                                    {% if x.english_mark > 40 %}
                                     <td class="bg-success text-light">
                                         PASS
                                     </td>
@@ -466,11 +463,11 @@
                                     
                                 </tr>
                                 {% endif %}
-                                {% if show_tamil == True %}
+                                {% if is_tamil == True %}
                                 <tr>
                                     <th scope="row">TAMIL</th>
-                                    <td>{{tamil_mark}} / 100</td>
-                                    {% if tamil_mark > 40 %}
+                                    <td>{{x.tamil_mark}} / 100</td>
+                                    {% if x.tamil_mark > 40 %}
                                     <td class="bg-success text-light">
                                         PASS
                                     </td>
@@ -483,11 +480,11 @@
                                 </tr>
                                 {% endif %}
 
-                                {% if show_maths == True %}
+                                {% if x.is_maths == True %}
                                 <tr>
                                     <th scope="row">MATHS</th>
-                                    <td>{{maths_mark}} / 100</td>
-                                    {% if maths_mark > 40 %}
+                                    <td>{{x.maths_mark}} / 100</td>
+                                    {% if x.maths_mark > 40 %}
                                     <td class="bg-success text-light">
                                         PASS
                                     </td>
@@ -500,11 +497,11 @@
                                 </tr>
                                 {% endif %}
 
-                                {% if show_science == True %}
+                                {% if x.is_science == True %}
                                 <tr>
                                     <th scope="row">SCIENCE</th>
-                                    <td>{{science_mark}} / 100</td>
-                                    {% if science_mark > 40 %}
+                                    <td>{{x.science_mark}} / 100</td>
+                                    {% if x.science_mark > 40 %}
                                     <td class="bg-success text-light">
                                         PASS
                                     </td>
@@ -517,11 +514,11 @@
                                 </tr>
                                 {% endif %}
 
-                                {% if show_social == True %}
+                                {% if x.is_social == True %}
                                 <tr>
                                     <th scope="row">SOCIAL</th>
-                                    <td>{{social_mark}} / 100</td>
-                                    {% if social_mark > 40 %}
+                                    <td>{{x.social_mark}} / 100</td>
+                                    {% if x.social_mark > 40 %}
                                     <td class="bg-success text-light">
                                         PASS
                                     </td>
@@ -533,11 +530,11 @@
                                 
                                 </tr>
                                 {% endif %}
-                                {% if show_computer == True %}
+                                {% if x.is_computer == True %}
                                 <tr>
                                     <th scope="row">COMPUTER</th>
-                                    <td>{{computer_mark}} / 100</td>
-                                    {% if computer_mark > 40 %}
+                                    <td>{{x.computer_mark}} / 100</td>
+                                    {% if x.computer_mark > 40 %}
                                     <td class="bg-success text-light">
                                         PASS
                                     </td>
@@ -560,7 +557,8 @@
 
 
         </div>
-
+        {% endfor %}
+        
     </div>
 
 

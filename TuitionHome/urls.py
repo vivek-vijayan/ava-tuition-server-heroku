@@ -16,13 +16,14 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from .views import AVA_login, AVA_logginer, AVA_Home, AVA_logout, AVA_A2P_self_absent_apply, AVA_A2P_self_absent_request, show_leader, AVA_password_reset, AVA_change_password, AVA_Exam_Result
+from .views import AVA_Admin_Exam_Result, AVA_login, AVA_logginer, AVA_Home, AVA_logout, AVA_A2P_self_absent_apply, AVA_A2P_self_absent_request, show_leader, AVA_password_reset, AVA_change_password, AVA_Exam_Result
 
 
 
 urlpatterns = [
     path('', AVA_login, name="AVA_login"),
     path('exam-score', AVA_Exam_Result, name="AVA_Exam_Result"),
+    path('admin-exam-score', AVA_Admin_Exam_Result, name="AVA_Admin_Exam_Result"),
     path('login', AVA_logginer, name="AVA_logginer"),
     path('logout', AVA_logout, name="AVA_Logout"),
     path('self-absent-raise', AVA_A2P_self_absent_request, name="self-absent-raise"),

@@ -369,27 +369,10 @@ def AVA_Admin_Exam_Result(request):
 
             show_exam_section = True
             exam_title = exam[0].exam_title
-            show_eng = exam.is_english
-            show_tam = exam.is_tamil
-            show_mat = exam.is_maths
-            show_sci = exam.is_science
-            show_soc = exam.is_social
-            show_com = exam.is_computer
-
-            total_mark = exam.total_mark
-            max_mark = exam.max_mark
-
-            mark_eng = exam.english_mark
-            mark_tam = exam.tamil_mark
-            mark_sci = exam.science_mark
-            mark_soc = exam.social_mark
-            mark_mat = exam.maths_mark
-            mark_com = exam.computer_mark
-
-            percentage = total_mark/max_mark * 100
+            exam = exam
 
             fullname = str(request.user.first_name)
-            return render(request, "AVA-Exam-Result.html", {
+            return render(request, "AVA-Teacher-Exam-Result.html", {
                 'username': request.user,
                 'fullname': fullname,
                 'firstname': request.user.first_name,
@@ -397,23 +380,7 @@ def AVA_Admin_Exam_Result(request):
                 'exam_title': exam_title,
 
                 'show_result': show_exam_section,
-                'show_english': show_eng,
-                'show_tamil': show_tam,
-                'show_maths': show_mat,
-                'show_science': show_sci,
-                'show_social': show_soc,
-                'show_computer': show_com,
-                'max_mark': max_mark,
-
-                'total_mark': total_mark,
-                'percent': percentage,
-
-                'english_mark': mark_eng,
-                'tamil_mark': mark_tam,
-                'science_mark': mark_sci,
-                'social_mark': mark_soc,
-                'maths_mark': mark_mat,
-                'computer_mark': mark_com,
+                'exam' : exam
             })
         else:
             return render(request, "AVA-Error.html", {'username': request.user, 'message': "Examination score will be announced soon.. please wait till the date. Hope for good marks !!"})
