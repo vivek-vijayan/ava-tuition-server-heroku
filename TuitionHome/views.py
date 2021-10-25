@@ -240,7 +240,7 @@ def AVA_Home(request):
                 'computer_mark' : mark_com,
             })
         else:
-            return render(request, "AVA-Error.html", {'username': request.user, 'message': "Your account has been locked"})
+            return render(request, "AVA-Error2.html", {'username': request.user, 'message': "Your account has been locked"})
     else:
         return render(request, "AVA-Error.html", {'username': request.user, 'message': "Your account has been locked"})
 
@@ -383,7 +383,7 @@ def AVA_Admin_Exam_Result(request):
                 'exam' : exam
             })
         else:
-            return render(request, "AVA-Error.html", {'username': request.user, 'message': "Examination score will be announced soon.. please wait till the date. Hope for good marks !!"})
+            return render(request, "AVA-Error2.html", {'username': request.user, 'message': "Examination score will be announced soon.. please wait till the date. Hope for good marks !!"})
     else:
         return render(request, "AVA-Error.html", {'username': request.user, 'message': "Your account has been locked"})
 
