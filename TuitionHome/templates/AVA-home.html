@@ -503,20 +503,21 @@
     <div class="container" style="margin-top: 30px;">
         <div class="row">
             <div style="padding-left: 30px;">
-            <h6>
-                <img src="{% static 'link.svg'%}" width="15px" alt="" srcset=""> Global Apps
-            </h6>
+                <h6>
+                    <img src="{% static 'link.svg'%}" width="15px" alt="" srcset=""> Global Apps
+                </h6>
             </div>
 
             <!-- A2Study -->
             <div class="col-sm-6" style="margin-top: 20px;">
                 <div class="d-grid gap-1 d-md-block">
-                    <button class="btn btn-warning" onclick="window.location.href = 'a2study/stud-home'" style="height:200px; width:100%; padding-top: 15px;">
+                    <button class="btn btn-warning" onclick="window.location.href = 'a2study/stud-home'"
+                        style="height:200px; width:100%; padding-top: 15px;">
                         <p class="display-6">
                             <img src="{% static 'book.svg'%}" width="40px" alt="" srcset="">
                             <small style="color: black;">
                                 Study Register
-                            </small> 
+                            </small>
                         </p>
                     </button>
                 </div>
@@ -610,9 +611,11 @@
                             <img src="{% static 'stat.svg'%}" width="50px" alt="" srcset="">
                         </h2>
                         <b>Admin Portal</b>
-                        <p> <small class="text-dark"> Examination results will be published here, results for all the students will be shown here</small></p>
+                        <p> <small class="text-dark"> Examination results will be published here, results for all the
+                                students will be shown here</small></p>
                     </div>
-                    <button class="btn btn-dark" onclick="window.location.href = 'admin-exam-score';" type="button">Go to
+                    <button class="btn btn-dark" onclick="window.location.href = 'admin-exam-score';" type="button">Go
+                        to
                         portal</button>
                 </div>
             </div>
@@ -648,41 +651,8 @@
     </div>
     {% endif %}
 
-    {% if show_result == True %}
-    <div style="padding-left: 30px;">
-        <h6>
-            <img src="{% static 'stat.svg'%}" width="15px" alt="" srcset="">  Examination Result
-        </h6>
+    <div style="margin-bottom: 100px;">
     </div>
-    <center>
-        <p class="h4">{{exam_title}}</p>
-    </center>
-    <div class="container">
-        <div class="row">
-            <table class="table" style="padding: 20px">
-                <thead>
-                    <tr>
-                        <th scope="col">Subject</th>
-                        <th scope="col">Mark</th>
-                        <th scope="col">Result</th>
-            
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    
-    {% endif %}
-        <div style="margin-bottom: 100px;">
-        </div>
 
 </body>
 
