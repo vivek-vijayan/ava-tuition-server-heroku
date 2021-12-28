@@ -80,11 +80,10 @@
                         <div class="col-sm-12">
                             <button type="submit" class="btn btn-dark">Check Status</button>
                             </form>
-                            <button type="button" class="btn btn-light">
-                                {% if total_complain > 0 %}
-                                Check-in Complaints <span class="badge bg-danger">{{total_complain}}</span>
-                                {% endif %}
-                            </button>
+                            <a href="https://docs.google.com/forms/d/e/1FAIpQLScP9WCEsx3GuIEYYVW3eMG7hDTkSkyIQcIMZnxeNx3vobyfOA/viewform?usp=pp_url&entry.1045044902={{studentid}}&entry.1352099543={{studentname}}">
+                                <button class="btn btn-warning">Adjustment</button>
+                            </a>
+                            
                         </div>
                     </div>
                 </div>
@@ -144,9 +143,7 @@
                                     </form>
                                     {% endif %}
                                     {% endif %}
-                                    <a href="https://docs.google.com/forms/d/e/1FAIpQLScP9WCEsx3GuIEYYVW3eMG7hDTkSkyIQcIMZnxeNx3vobyfOA/viewform?usp=pp_url&entry.1045044902={{studentid}}&entry.1352099543={{studentname}}">
-                                        <button class="btn btn-danger">Adjustment</button>
-                                    </a>
+                                    
                                 </div>
                             </div>
                         </div>
