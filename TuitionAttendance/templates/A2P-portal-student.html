@@ -82,7 +82,8 @@
             <div class="col-sm-12">
                 <p class="h5">Student Check-In</p>
                 <span class="badge bg-danger">Leader</span><br>
-                <p><small>showing the result of {{studentname}}, if you want to change the selection click on the below change filter option</small></p>
+                <p><small>showing the result of {{studentname}}, if you want to change the selection click on the below
+                        change filter option</small></p>
             </div>
             <a href="/home">
                 <button type="submit" class="btn btn-outline-secondary">
@@ -99,11 +100,11 @@
                             <label class="input-group-text" for="student_name_selection">Student</label>
                             <select class="form-select" id="student_name_selection" name="student_name_selection">
                                 {% for x in total_students %}
-                                    {% if x.0 == studentname %}
-                                    <option value="{{ x.0 }}" selected>{{ x.1 }}</option>
-                                    {% else %}
-                                    <option value="{{ x.0 }}">{{ x.1 }}</option>
-                                    {% endif %}
+                                {% if x.0 == studentname %}
+                                <option value="{{ x.0 }}" selected>{{ x.1 }}</option>
+                                {% else %}
+                                <option value="{{ x.0 }}">{{ x.1 }}</option>
+                                {% endif %}
                                 {% endfor %}
                             </select>
                         </div>
@@ -112,12 +113,13 @@
                     <div class="col-sm-12">
                         <button type="submit" class="btn btn-dark">Check Status</button>
                         </form>
+
                     </div>
                 </div>
             </div>
-            
+
         </div>
-        
+
     </div>
     <!-- Students -->
     <div class="container" style="margin-top: 20px;">
@@ -131,8 +133,8 @@
                     <div class="card-body text-success" style="text-align: center;">
                         <div class="row">
                             <div class="col-sm-5">
-                                <img src="{{ studentimage }}" class="mx-auto d-block"
-                                    style="border-radius: 100%;" width="150px" alt="user logo">
+                                <img src="{{ studentimage }}" class="mx-auto d-block" style="border-radius: 100%;"
+                                    width="150px" alt="user logo">
                                 <h5 class="card-title text-dark">
                                     <p class="display-6" style="padding-top: 10px;">
                                         {{studentname}}
@@ -142,9 +144,11 @@
                             <div class="col-sm-3">
                                 <div class="col-sm-12">
                                     {% if status == "Not Arrived" or status == "Absent" %}
-                                    <small class="card-text">Status: <span class="badge rounded-pill bg-danger">{{status}}</span></small>
+                                    <small class="card-text">Status: <span
+                                            class="badge rounded-pill bg-danger">{{status}}</span></small>
                                     {% else %}
-                                    <small class="card-text">Status: <span class="badge rounded-pill bg-success">{{status}}</span></small>
+                                    <small class="card-text">Status: <span
+                                            class="badge rounded-pill bg-success">{{status}}</span></small>
                                     {% endif %}
                                 </div>
                             </div>
@@ -152,22 +156,22 @@
 
                         <div style="padding-top: 20px;">
                             {% if status != "Absent" %}
-                                {% if status != "Not Arrived" %}
-                                <p class="card-text">
-                                <div class="alert alert-success d-flex align-items-center text-success" role="alert">
-                                    <div>
-                                        <small>
-                                            <b> In-time: </b> {{check_in_time}}
-                                
-                                            {% if day_off == True %}
-                                            <br>
-                                            <b> Out-time: </b> {{check_out_time}}
-                                            {% endif %}
-                                        </small>
-                                    </div>
+                            {% if status != "Not Arrived" %}
+                            <p class="card-text">
+                            <div class="alert alert-success d-flex align-items-center text-success" role="alert">
+                                <div>
+                                    <small>
+                                        <b> In-time: </b> {{check_in_time}}
+
+                                        {% if day_off == True %}
+                                        <br>
+                                        <b> Out-time: </b> {{check_out_time}}
+                                        {% endif %}
+                                    </small>
                                 </div>
-                                </p>
-                                {% endif %}
+                            </div>
+                            </p>
+                            {% endif %}
                             {% endif %}
                             {% if day_off != True %}
                             {% if status == "Not Arrived" %}
@@ -191,6 +195,12 @@
                             </form>
                             {% endif %}
                             {% endif %}
+                            <div style="margin: 5px;">
+                                <a
+                                    href="https://docs.google.com/forms/d/e/1FAIpQLScP9WCEsx3GuIEYYVW3eMG7hDTkSkyIQcIMZnxeNx3vobyfOA/viewform?usp=pp_url&entry.1045044902={{studentid}}&entry.1352099543={{studentname}}">
+                                    <button class="btn btn-warning">Adjustment</button>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -216,19 +226,19 @@
                             <th scope="row">{{y.0}}</th>
                             <td>{{y.1}}</td>
                             <td><span class="badge bg-success">{{y.2}}</span></td>
-    
+
                         </tr>
                         {% else %}
                         <tr class="table-danger">
                             <th scope="row">{{y.0}}</th>
                             <td>{{y.1}}</td>
                             <td><span class="badge bg-danger">{{y.2}}</span></td>
-    
+
                         </tr>
                         {% endif %}
-    
+
                         {% endfor %}
-    
+
                     </tbody>
                 </table>
             </div>
@@ -262,8 +272,8 @@
             </div>
         </div>
     </div>
-<div style="margin-bottom: 100px;">
-</div>
+    <div style="margin-bottom: 100px;">
+    </div>
 </body>
 
 </html>
