@@ -35,6 +35,7 @@ def A2P_homepage(request):
             att_reg = Check_in_out_db_register.objects.filter(
                 student_name__username__contains=x.student_name,
                 attendance_date=datetime.date.today())
+
             if len(att_reg) > 0:
                 at_reg_status = att_reg[0].status
             else:
@@ -43,6 +44,77 @@ def A2P_homepage(request):
             all_students.append(
                 [x.student_name, name[0].first_name, at_reg_status])
         return render(request, "A2P-portal.html", {'all_students': all_students, 'count': count,  'total_students': total_students, 'leader': request.user, 'expire_on': expire_on})
+    else:
+        return redirect(A2P_logout)
+
+@login_required(login_url=A2P_login)
+def A2P_getrecheckpage(request):
+    # checking access to A2Portal
+    access = A2Presence_access.objects.filter(
+        leader=request.user, valid_till__gte=datetime.datetime.now())
+    if len(access) > 0:
+        expire_on = access[0].valid_till
+        students = Student.objects.all()
+        total_students = []
+        for x in students:
+            name = User.objects.filter(username=x.student_name, is_active=True)
+            total_students.append([x.student_name, name[0].first_name])
+        all_students = []
+        count = 0
+        for x in students:
+            name = User.objects.filter(
+                  username=x.student_name, is_active=True)
+
+            # Getting the date to check the date from the previous dayes
+            att_reg = Check_in_out_db_register.objects.filter(
+                student_name__username__contains=x.student_name,
+                attendance_date= datetime.datetime.now())
+
+            if len(att_reg) > 0:
+                at_reg_status = att_reg[0].status
+            else:
+                at_reg_status = "Not Arrived"
+            count = count + 1
+            all_students.append(
+                [x.student_name, name[0].first_name, at_reg_status])
+        return render(request, "A2P-portal-getcheckdate.html", {'all_students': all_students, 'count': count,  'total_students': total_students, 'leader': request.user, 'expire_on': expire_on})
+    else:
+        return redirect(A2P_logout)
+
+@login_required(login_url=A2P_login)
+def A2P_recheck(request):
+    # checking access to A2Portal
+    access = A2Presence_access.objects.filter(
+        leader=request.user, valid_till__gte=datetime.datetime.now())
+    if len(access) > 0:
+        expire_on = access[0].valid_till
+        students = Student.objects.all()
+        total_students = []
+        for x in students:
+            name = User.objects.filter(username=x.student_name, is_active=True)
+            total_students.append([x.student_name, name[0].first_name])
+        all_students = []
+        count = 0
+        for x in students:
+            name = User.objects.filter(
+                  username=x.student_name, is_active=True)
+
+            # Getting the date to check the date from the previous dayes
+            checkdate = request.POST['checkdate']
+            year,month,date = str(checkdate).split('-')
+
+            att_reg = Check_in_out_db_register.objects.filter(
+                student_name__username__contains=x.student_name,
+                attendance_date= datetime.datetime(int(year),int(month),int(date)))
+
+            if len(att_reg) > 0:
+                at_reg_status = att_reg[0].status
+            else:
+                at_reg_status = "Not Arrived"
+            count = count + 1
+            all_students.append(
+                [x.student_name, name[0].first_name, at_reg_status])
+        return render(request, "A2P-portal-recheck.html", {'all_students': all_students, 'count': count,  'total_students': total_students, 'leader': request.user, 'checkdate': checkdate, 'expire_on': expire_on})
     else:
         return redirect(A2P_logout)
 

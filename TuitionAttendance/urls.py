@@ -16,14 +16,16 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from .views import A2P_homepage, A2P_query, A2P_checkin, A2P_checkout, A2P_login, A2P_logout, A2P_display_action
+from .views import A2P_homepage, A2P_query, A2P_checkin, A2P_checkout, A2P_login, A2P_logout, A2P_display_action,A2P_recheck, A2P_getrecheckpage
 
 urlpatterns = [
     path('home', A2P_homepage, name="Attendance Homepage"),
+    path('recheck',A2P_recheck, name="Attendance recheck"),
+    path('getrecheck', A2P_getrecheckpage, name="Get recheck date"),
     path('query', A2P_query, name="Attendance query"),
     path('checkin', A2P_checkin, name="checkin query"),
     path('checkout', A2P_checkout, name="checkout query"),
     path('login', A2P_login, name="A2P_login"),
     path('logout', A2P_logout, name="A2P_logout"),
-    path('show/<username>/<action>', A2P_display_action,name="A2P_display_action")
+    path('show/<username>/<action>', A2P_display_action,name="A2P_display_action"),
 ]
