@@ -102,6 +102,7 @@ def AVA_Home(request):
 
                 fullname = str(request.user.first_name)
                 return render(request, "AVA-home.html", {
+                    'userid': request.user.id,
                     'position': 'teacher',
                     'username': request.user,
                     'fullname': fullname,
@@ -201,6 +202,7 @@ def AVA_Home(request):
         if len(student) > 0:
             fullname = str(request.user.first_name)
             return render(request, "AVA-home.html", {
+                'userid': request.user.id,
                 'position': 'student',
                 'username': request.user,
                 'fullname': fullname,
@@ -236,7 +238,7 @@ def AVA_Home(request):
                 'tamil_mark' : mark_tam,
                 'science_mark' : mark_sci,
                 'social_mark' : mark_soc,
-                'maths_mark' : mark_mat,
+                'maths_mark' : mark_mat, 
                 'computer_mark' : mark_com,
             })
         else:
