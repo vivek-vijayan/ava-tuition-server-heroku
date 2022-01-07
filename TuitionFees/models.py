@@ -5,7 +5,8 @@ from django.contrib.auth.models import User
 class Month(models.Model):
     month = models.CharField(primary_key=True, max_length=200)
 
-
+    def __str__(self) -> str:
+        return self.month
 
 class FeesCollector(models.Model):
     student = models.ForeignKey(User, on_delete=models.PROTECT)
@@ -18,4 +19,4 @@ class FeesCollector(models.Model):
     paid_for = models.CharField(max_length=200)
 
     def __str__(self) -> str:
-        return str(self.student) + " Paid: Rs." + str(int(self.fees) + int(self.late_pay_fine)) + " - Paid on : " + str(self.payment_on) + " - PERIOD : " + str(self.paid_month) + " " + str(self.paid_year) 
+        return str(self.student) + " Paid: Rs." + str(int(self.fees) + int(self.late_pay_fine)) + " - PERIOD : " + str(self.paid_month) + " " + str(self.paid_year) 
