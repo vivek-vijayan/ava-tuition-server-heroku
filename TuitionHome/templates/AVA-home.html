@@ -413,12 +413,12 @@
                                 <br>
                                 <br>
                                 {% if fees_pending == True %}
-                                ⚠️ <span class="badge bg-danger blink" id="show_fess_alert">FEES PENDING Rs. {{pending_amount}}</span>
-                                <small class="text-danger" style="padding-top: 5px;">After 10th {{cm}}, fine will be collected</small>
+                                <span class="badge bg-danger blink" id="show_fess_alert">FEES PENDING Rs. {{pending_amount}}</span>
+                                <small class="text-danger" style="padding-top: 5px;">Please try to pay on or before 10th {{cm}} to avoid late pay fee</small>
                                 {% endif %}
 
                                 {% if fees_paid == True %}
-                                ✅ <span class="badge bg-success" id="show_fess_alert">FEES PAID</span> 
+                                <span class="badge bg-success" id="show_fess_alert">FEES PAID</span> 
                                 
                                 {% endif %}
 
@@ -426,7 +426,7 @@
                                 <hr>
                                 <p>
                                     <small > Other Registration: </small>
-                                    <span class="badge rounded-pill text-primary">Computer Training Class ✅</span>    
+                                    <span class="badge rounded-pill text-primary">Computer Training Class </span>    
                                 </p>
                                 
                                 {% endif %}
