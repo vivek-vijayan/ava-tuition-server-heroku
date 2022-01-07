@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'TuitionComplaintBox',
     'TuitionExamination',
     'TuitionFees',
+    'ComputerClass',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

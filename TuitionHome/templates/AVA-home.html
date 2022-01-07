@@ -409,8 +409,49 @@
                                 </small>
                                 <span class="badge rounded-pill bg-secondary text-light">Class {{class}}</span>
                                 <span class="badge rounded-pill text-secondary">{{cbse_metric}}</span>
+                                
+                                <br>
+                                <br>
+                                {% if fees_pending == True %}
+                                ⚠️ <span class="badge bg-danger blink" id="show_fess_alert">FEES PENDING Rs. {{pending_amount}}</span>
+                                <small class="text-danger" style="padding-top: 5px;">After 10th {{cm}}, fine will be collected</small>
+                                {% endif %}
 
+                                {% if fees_paid == True %}
+                                ✅ <span class="badge bg-success" id="show_fess_alert">FEES PAID</span> 
+                                
+                                {% endif %}
 
+                                {% if cc == True %}
+                                <hr>
+                                <p>
+                                    <small > Other Registration: </small>
+                                    <span class="badge rounded-pill text-primary">Computer Training Class ✅</span>    
+                                </p>
+                                
+                                {% endif %}
+                                <style>
+                                    .blink {
+                                        animation: blink-animation 0.5s ease-in-out infinite;
+                                        -webkit-animation: blink-animation 0.5s ease-in-out infinite;
+                                        }
+                                        @keyframes blink-animation {
+                                            from{
+                                                opacity: 0;
+                                            }
+                                        to {
+                                            opacity: 100;
+                                        }
+                                        }
+                                        @-webkit-keyframes blink-animation {
+                                            from{
+                                                opacity: 0;
+                                            }
+                                        to {
+                                            opacity: 100;
+                                        }
+                                        }
+                                </style>
                                 {% endif%}
                             </p>
                             {% if is_leader == True %}

@@ -5,6 +5,9 @@ from TuitionDB.models import A2Presence_access, Student, Leader, A2Study_access
 from TuitionAttendance.models import Check_in_out_db_register
 from django.contrib.auth.models import User
 from TuitionExamination.models import LastExaminationScoreOut
+from ComputerClass.models import ComputerClassRegistration
+from TuitionFees.models import FeesCollector
+from django.db.models import Sum
 # Create your views here.
 import datetime
 
@@ -199,6 +202,37 @@ def AVA_Home(request):
 
             percentage = total_mark/max_mark * 100
 
+        # Computer class check
+        computer_class = ComputerClassRegistration.objects.filter(
+        student=request.user,
+        end_date__gte=datetime.datetime.now()
+        )
+
+        current_Fees = student[0].fees
+        cc = False
+        if len(computer_class) > 0:
+            current_Fees = current_Fees + computer_class[0].fees
+            cc = True
+
+        fees_paid = False
+        fees_pending = True
+        pending_amount = 1
+        currentMonth = datetime.datetime.now().month
+        mon = ['','January', 'February','March', 'April', 'May', 'June', 'July','August', 'September','October','November','December']
+        print(mon[currentMonth])
+        fees_collector = FeesCollector.objects.filter(
+            student=request.user,
+            ).aggregate(Sum('fees'))
+
+        if len(fees_collector) > 0:
+            print(fees_collector['fees__sum'])
+            if current_Fees == fees_collector['fees__sum']:
+                fees_paid = True
+                fees_pending = False
+            else:
+                fees_pending = True
+                pending_amount = current_Fees - fees_collector['fees__sum']
+
         if len(student) > 0:
             fullname = str(request.user.first_name)
             return render(request, "AVA-home.html", {
@@ -207,7 +241,7 @@ def AVA_Home(request):
                 'username': request.user,
                 'fullname': fullname,
                 'firstname': request.user.first_name,
-                'fees': "Fees ₹ " + str(student[0].fees),
+                'fees': "Total Fees ₹ " + str(current_Fees),
                 'a2p_access': a2p_access,
                 'a2s_access': a2s_access,
                 'date_of_joining': student[0].date_of_joining,
@@ -222,7 +256,11 @@ def AVA_Home(request):
                 'check_out_time': check_out_time,
                 'logo': request.user.last_name,
                 'class': student[0].student_class,
-
+                'cc': cc,
+                'fees_paid' : fees_paid,
+                'fees_pending': fees_pending,
+                'pending_amount': pending_amount,
+                'cm': mon[currentMonth],
                 'show_result' : show_exam_section,
                 'show_english' : show_eng,
                 'show_tamil' : show_tam,
