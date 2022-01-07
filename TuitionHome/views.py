@@ -231,7 +231,11 @@ def AVA_Home(request):
                 fees_pending = False
             else:
                 fees_pending = True
-                pending_amount = current_Fees - fees_collector['fees__sum']
+                try:
+                    pending_amount = current_Fees - fees_collector['fees__sum']
+                except:
+                    pending_amount = current_Fees
+
 
         if len(student) > 0:
             fullname = str(request.user.first_name)
