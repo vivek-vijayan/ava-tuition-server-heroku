@@ -413,6 +413,9 @@
                                 <br>
                                 <br>
                                 {% if fees_pending == True %}
+                                <script>
+                                    alert('FEES PENDING Rs. {{pending_amount}}, Please try to pay on or before 10th {{cm}} to avoid late pay fee');
+                                </script>
                                 <span class="badge bg-danger blink" id="show_fess_alert">FEES PENDING Rs. {{pending_amount}}</span>
                                 <small class="text-danger" style="padding-top: 5px;">Please try to pay on or before 10th {{cm}} to avoid late pay fee</small>
                                 {% endif %}
