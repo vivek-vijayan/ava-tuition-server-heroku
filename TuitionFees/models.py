@@ -27,4 +27,4 @@ class FeesCollector(models.Model):
     payment_mode = models.CharField(max_length=200, choices=PAYMENT_MODE, default="CASH")
 
     def __str__(self) -> str:
-        return str(self.student) + " Paid: Rs." + str(int(self.fees) + int(self.late_pay_fine)) + " - PERIOD : " + str(self.paid_month) + " " + str(self.paid_year) 
+        return str(self.student) + " Paid: Rs." + str(int(self.fees) + int(self.late_pay_fine)) + " - PERIOD : " + str(self.paid_month) + " " + str(self.paid_year) + " MODE: " + str(self.payment_mode) 
