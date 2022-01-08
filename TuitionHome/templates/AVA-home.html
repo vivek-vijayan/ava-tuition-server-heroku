@@ -409,53 +409,100 @@
                                 </small>
                                 <span class="badge rounded-pill bg-secondary text-light">Class {{class}}</span>
                                 <span class="badge rounded-pill text-secondary">{{cbse_metric}}</span>
-                                
+
                                 <br>
                                 <br>
                                 {% if fees_pending == True %}
                                 <script>
                                     swal("Fees Pending! Rs. {{pending_amount}}", "Please try to pay on or before 10th {{cm}} else fine will be collected Rs.10/Day !", "warning");
                                 </script>
-                                <span class="badge bg-danger blink" id="show_fess_alert">FEES PENDING Rs. {{pending_amount}}</span>
-                                <small class="text-danger" style="padding-top: 5px;">Please try to pay on or before 10th {{cm}} else fine will be collected Rs.10/Day</small>
-                                {% endif %}
+                                <span class="badge bg-danger blink" id="show_fess_alert">FEES PENDING Rs.
+                                    {{pending_amount}}</span>
+                                <small class="text-danger" style="padding-top: 5px;">Please try to pay on or before 10th
+                                    {{cm}} else fine will be collected Rs.10/Day</small>
 
-                                {% if fees_paid == True %}
-                                <span class="badge bg-success" id="show_fess_alert">FEES PAID</span> 
-                                <a href="upi://pay?pa=vijayanv31@ybl&amp;pn=AVA Tuition Group &amp;cu=INR&amp;am=20" class="upi-pay1">Pay Now !</a>
-                                {% endif %}
-
-                                {% if cc == True %}
-                                <hr>
-                                <p>
-                                    <small > Other Registration: </small>
-                                    <span class="badge rounded-pill text-primary">Computer Training Class </span>    
-                                </p>
-                                
-                                {% endif %}
                                 <style>
-                                    .blink {
-                                        animation: blink-animation 0.5s ease-in-out infinite;
-                                        -webkit-animation: blink-animation 0.5s ease-in-out infinite;
-                                        }
-                                        @keyframes blink-animation {
-                                            from{
-                                                opacity: 0;
-                                            }
-                                        to {
-                                            opacity: 100;
-                                        }
-                                        }
-                                        @-webkit-keyframes blink-animation {
-                                            from{
-                                                opacity: 0;
-                                            }
-                                        to {
-                                            opacity: 100;
-                                        }
-                                        }
+                                    .phonepe {
+                                        background-color: #6739B7;
+                                        border: none;
+                                        color: rgb(255, 255, 255);
+                                        padding: 10px 10px;
+                                        text-align: center;
+                                        text-decoration: none;
+                                        display: inline-block;
+                                        margin: 4px 2px;
+                                        cursor: pointer;
+                                        border-radius: 6px;
+                                        font-size: 12px;
+
+                                    }
+
+                                    .phonepe:hover {
+                                        background-color: #6739B7;
+                                        border: none;
+                                        color: rgb(219, 219, 219);
+                                        padding: 10px 10px;
+                                        text-align: center;
+                                        text-decoration: none;
+                                        display: inline-block;
+                                        margin: 4px 2px;
+                                        cursor: pointer;
+                                        border-radius: 6px;
+                                        font-size: 12px;
+
+                                    }
+
                                 </style>
-                                {% endif%}
+
+                            <div>
+                                <a
+                                    href="upi://pay?pa=vijayanv31@ybl&amp;pn=VIVEK &amp;cu=INR&amp;am={{pending_amount}}">
+                                    <button class="btn phonepe">Pay Rs.{{pending_amount}} PhonePe</button>
+                                </a>
+                            </div>
+
+                            {% endif %}
+
+                            {% if fees_paid == True %}
+                            <span class="badge bg-success" id="show_fess_alert">FEES PAID</span>
+
+                            {% endif %}
+
+                            {% if cc == True %}
+                            <hr>
+                            <p>
+                                <small> Other Registration: </small>
+                                <span class="badge rounded-pill text-primary">Computer Training Class </span>
+                            </p>
+
+                            {% endif %}
+                            <style>
+                                .blink {
+                                    animation: blink-animation 0.5s ease-in-out infinite;
+                                    -webkit-animation: blink-animation 0.5s ease-in-out infinite;
+                                }
+
+                                @keyframes blink-animation {
+                                    from {
+                                        opacity: 0;
+                                    }
+
+                                    to {
+                                        opacity: 100;
+                                    }
+                                }
+
+                                @-webkit-keyframes blink-animation {
+                                    from {
+                                        opacity: 0;
+                                    }
+
+                                    to {
+                                        opacity: 100;
+                                    }
+                                }
+                            </style>
+                            {% endif%}
                             </p>
                             {% if is_leader == True %}
                             <span class="badge bg-dark">{{ leader_roles }}</span>
