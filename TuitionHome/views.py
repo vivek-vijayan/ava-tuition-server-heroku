@@ -222,6 +222,7 @@ def AVA_Home(request):
         print(mon[currentMonth])
         fees_collector = FeesCollector.objects.filter(
             student=request.user,
+            paid_month = mon[currentMonth]
             ).aggregate(Sum('fees'))
 
         if len(fees_collector) > 0:
@@ -232,7 +233,7 @@ def AVA_Home(request):
             else:
                 fees_pending = True
                 try:
-                    pending_amount = current_Fees - fees_collector['fees__sum']
+                    pending_amount = int(current_Fees) - int(fees_collector['fees__sum'])
                 except:
                     pending_amount = current_Fees
 
