@@ -218,6 +218,8 @@ def AVA_Home(request):
         fees_pending = True
         pending_amount = 1
         currentMonth = datetime.datetime.now().month
+        currentDay = datetime.datetime.now().day
+        additionFine = (int(currentDay)-10) * 10
         mon = ['','January', 'February','March', 'April', 'May', 'June', 'July','August', 'September','October','November','December']
         print(mon[currentMonth])
         fees_collector = FeesCollector.objects.filter(
@@ -233,9 +235,9 @@ def AVA_Home(request):
             else:
                 fees_pending = True
                 try:
-                    pending_amount = int(current_Fees) - int(fees_collector['fees__sum'])
+                    pending_amount = int(current_Fees) - int(fees_collector['fees__sum']) + additionFine
                 except:
-                    pending_amount = current_Fees
+                    pending_amount = current_Fees + additionFine
 
 
         if len(student) > 0:
