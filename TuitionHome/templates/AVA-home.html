@@ -743,21 +743,56 @@
     {% endif %}
 
     {% if a2s_access == True %}
-    
-    <div class="row">
-        <div class="col-sm-12">
-            <table class="table table-striped">
-                {% for x in all_students %}
-                <tr>
-                    <td>
-                        {{x.student_name}}
-                    </td>
-                    <td>
-                        {{x.emergency_contact_number}}
-                    </td>
-                </tr>
-                {% endfor %}
-              </table>
+    <div class="container" style="margin-top: 30px;">
+        <div class="row">
+            <div class="col-sm-12">
+                <h5>
+                    <img src="{% static 'link.svg'%}" width="15px" alt="" srcset=""> Emergency Contact (available only for admin)
+                </h5>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <table class="table table-striped">
+                    <th>
+                        <td>
+                            Student name
+                        </td>
+                        <td>
+                            Phone number
+                        </td>
+                        <td>
+                            Action
+                        </td>
+                    </th>
+                    {% for x in all_students %}
+                    <tr>
+                        <td>
+                            {{x.student_name.first_name}}
+                        </td>
+                        <td>
+                            {% if x.emergency_contact_number == 0 %}
+                                No Number
+                            {% else %}
+                            {{x.emergency_contact_number}}
+                            {% endif %}
+                        </td>
+                        <td>
+
+                            {% if x.emergency_contact_number == 0 %}
+                                No Number
+                            {% else %}    
+                            <a href="tel:{{x.emergency_contact_number}}">
+                            <button class="btn btn-danger">
+                                Call 
+                            </button>
+                            </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                  </table>
+            </div>
         </div>
     </div>
 
