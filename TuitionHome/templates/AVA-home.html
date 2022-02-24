@@ -747,14 +747,14 @@
         <div class="row">
             <div class="col-sm-12">
                 <h5>
-                    <img src="{% static 'link.svg'%}" width="15px" alt="" srcset=""> Emergency Contact (available only for admin)
+                    <img src="{% static 'phone.svg'%}" width="15px" alt="" srcset=""> Emergency Contact (available only for admin)
                 </h5>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-12">
                 <table class="table table-striped">
-                    <th>
+                    <thead>
                         <td>
                             Student name
                         </td>
@@ -764,14 +764,15 @@
                         <td>
                             Action
                         </td>
-                    </th>
+                    </thead>
+                    <tbody>
                     {% for x in all_students %}
                     <tr>
                         <td>
                             {{x.student_name.first_name}}
                         </td>
                         <td>
-                            {% if x.emergency_contact_number == 0 %}
+                            {% if x.emergency_contact_number == "0" %}
                                 No Number
                             {% else %}
                             {{x.emergency_contact_number}}
@@ -779,18 +780,19 @@
                         </td>
                         <td>
 
-                            {% if x.emergency_contact_number == 0 %}
+                            {% if x.emergency_contact_number == "0" %}
                                 No Number
                             {% else %}    
                             <a href="tel:{{x.emergency_contact_number}}">
                             <button class="btn btn-danger">
-                                Call 
+                                <img src="{% static 'phone.svg'%}" width="15px" alt="" srcset="">  Call 
                             </button>
                             </a>
                             {% endif %}
                         </td>
                     </tr>
                     {% endfor %}
+                    </tbody>
                   </table>
             </div>
         </div>
