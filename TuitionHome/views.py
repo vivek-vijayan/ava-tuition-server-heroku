@@ -73,6 +73,7 @@ def AVA_Home(request):
     if request.user.is_superuser:
         a2p_access = True
         fullname = str(request.user.first_name)
+        students = Student.objects.filter(is_active=True)
         return render(request, "AVA-home.html", {
             'position': 'administrator',
             'username': request.user,
@@ -83,6 +84,7 @@ def AVA_Home(request):
             'a2s_access': True,
             'show_stat': False,
             'is_leader': True,
+            'all_students': students,
             'logo': request.user.last_name,
             'leader_roles': 'Administrator',
         })
@@ -240,7 +242,8 @@ def AVA_Home(request):
                     pending_amount = int(current_Fees) - int(fees_collector['fees__sum']) + additionFine
                 except:
                     pending_amount = current_Fees + additionFine
-
+        students = Student.objects.filter(
+            student_name=request.user, is_active=True)
 
         if len(student) > 0:
             fullname = str(request.user.first_name)
@@ -257,6 +260,7 @@ def AVA_Home(request):
                 'cbse_metric': student[0].cbse_metric,
                 'is_leader': is_leader,
                 'leader_roles': leader_roles,
+                'all_students': student,
                 'absent': absent,
                 'show_stat': True,
                 'status': status,

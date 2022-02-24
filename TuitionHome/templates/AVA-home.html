@@ -742,6 +742,27 @@
     </div>
     {% endif %}
 
+    {% if a2s_access == True %}
+    
+    <div class="row">
+        <div class="col-sm-12">
+            <table class="table table-striped">
+                {% for x in all_students %}
+                <tr>
+                    <td>
+                        {{x.student_name}}
+                    </td>
+                    <td>
+                        {{x.emergency_contact_number}}
+                    </td>
+                </tr>
+                {% endfor %}
+              </table>
+        </div>
+    </div>
+
+
+    {% endif }
     <div style="margin-bottom: 100px;">
     </div>
 
