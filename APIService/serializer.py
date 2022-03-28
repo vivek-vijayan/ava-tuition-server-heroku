@@ -7,3 +7,8 @@ class StudentsAPI(serializers.ModelSerializer):
     class Meta:
         model = Student
         fields = "__all__"
+
+class UserAPI(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = "__all__"

@@ -16,14 +16,16 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import URLPattern, path, include
-from .views import show_student
+from .views import getAllStudents, getAllUsers
 from rest_framework import routers
 
 
 
 router = routers.DefaultRouter()
-router.register('student', show_student)
+router.register('get-all-students', getAllStudents)
+router.register('get-all-users', getAllUsers)
+
 
 urlpatterns = [
-    path('ava/', include(router.urls)),
+    path('ava-group-api-service/', include(router.urls)),
 ]
